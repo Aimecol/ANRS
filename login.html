@@ -189,5 +189,14 @@
     <!-- JavaScript -->
     <script src="js/auth.js"></script>
     <script src="js/main.js"></script>
+    <script>
+      // Direct initialization of the login form
+      document.addEventListener("DOMContentLoaded", function () {
+        const loginForm = document.getElementById("login-form");
+        if (loginForm) {
+          loginForm.addEventListener("submit", handleLogin);
+        }
+      });
+    </script>
   </body>
 </html>

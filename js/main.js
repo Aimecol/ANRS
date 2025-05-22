@@ -123,6 +123,12 @@ function initPageFunctionality() {
     case "":
       initLoginPage();
       break;
+    case "login.html":
+      initLoginPage();
+      break;
+    case "signup.html":
+      initLoginPage(); // This initializes the registration form
+      break;
     case "index.html":
       initDashboardPage();
       break;

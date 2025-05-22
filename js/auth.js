@@ -9,12 +9,22 @@
  */
 function handleLogin(e) {
   e.preventDefault();
+  console.log("Login form submitted");
 
   const emailInput = document.getElementById("login-email");
   const passwordInput = document.getElementById("login-password");
   const errorContainer = document.getElementById("login-error");
 
-  if (!emailInput || !passwordInput) return;
+  console.log("Login form elements:", {
+    emailInput,
+    passwordInput,
+    errorContainer,
+  });
+
+  if (!emailInput || !passwordInput) {
+    console.error("Login form elements not found");
+    return;
+  }
 
   const email = emailInput.value.trim();
   const password = passwordInput.value;
@@ -43,12 +53,32 @@ function handleLogin(e) {
   }
 
   // Login successful
-  // Store current user in localStorage (excluding password)
-  const { password: _, ...userWithoutPassword } = user;
-  localStorage.setItem("currentUser", JSON.stringify(userWithoutPassword));
+  console.log("Login successful for user:", user.email);
 
-  // Redirect to dashboard
-  window.location.href = "dashboard.html";
+  // Store current user in localStorage (excluding password)
+  try {
+    const { password: _, ...userWithoutPassword } = user;
+    localStorage.setItem("currentUser", JSON.stringify(userWithoutPassword));
+    console.log("Current user saved to localStorage:", userWithoutPassword);
+  } catch (error) {
+    console.error("Error saving current user to localStorage:", error);
+  }
+
+  // Show success message before redirecting
+  if (errorContainer) {
+    errorContainer.textContent =
+      "Login successful! Redirecting to dashboard...";
+    errorContainer.classList.remove("hidden");
+    errorContainer.style.backgroundColor = "#e8f5e9";
+    errorContainer.style.color = "#2e7d32";
+  }
+
+  console.log("Login successful, redirecting to dashboard...");
+
+  // Redirect to dashboard after a short delay
+  setTimeout(() => {
+    window.location.href = "dashboard.html";
+  }, 1500);
 }
 
 /**
@@ -57,6 +87,7 @@ function handleLogin(e) {
  */
 function handleRegister(e) {
   e.preventDefault();
+  console.log("Registration form submitted");
 
   const nameInput = document.getElementById("register-name");
   const emailInput = document.getElementById("register-email");
@@ -65,6 +96,14 @@ function handleRegister(e) {
     "register-confirm-password"
   );
   const errorContainer = document.getElementById("register-error");
+
+  console.log("Form elements:", {
+    nameInput,
+    emailInput,
+    passwordInput,
+    confirmPasswordInput,
+    errorContainer,
+  });
 
   if (!nameInput || !emailInput || !passwordInput || !confirmPasswordInput)
     return;
@@ -112,18 +151,48 @@ function handleRegister(e) {
     createdAt: new Date().toISOString(),
   };
 
+  console.log("Creating new user:", newUser);
+
   // Add to users array
   users.push(newUser);
 
   // Save to localStorage
-  localStorage.setItem("users", JSON.stringify(users));
+  try {
+    localStorage.setItem("users", JSON.stringify(users));
+    console.log("Users saved to localStorage:", users);
+  } catch (error) {
+    console.error("Error saving users to localStorage:", error);
+    if (errorContainer) {
+      errorContainer.textContent = "Error creating account: " + error.message;
+      errorContainer.classList.remove("hidden");
+    }
+    return;
+  }
 
   // Store current user in localStorage (excluding password)
-  const { password: _, ...userWithoutPassword } = newUser;
-  localStorage.setItem("currentUser", JSON.stringify(userWithoutPassword));
+  try {
+    const { password: _, ...userWithoutPassword } = newUser;
+    localStorage.setItem("currentUser", JSON.stringify(userWithoutPassword));
+    console.log("Current user saved to localStorage:", userWithoutPassword);
+  } catch (error) {
+    console.error("Error saving current user to localStorage:", error);
+  }
 
-  // Redirect to dashboard
-  window.location.href = "dashboard.html";
+  // Show success message before redirecting
+  if (errorContainer) {
+    errorContainer.textContent =
+      "Account created successfully! Redirecting to dashboard...";
+    errorContainer.classList.remove("hidden");
+    errorContainer.style.backgroundColor = "#e8f5e9";
+    errorContainer.style.color = "#2e7d32";
+  }
+
+  console.log("Registration successful, redirecting to dashboard...");
+
+  // Redirect to dashboard after a short delay
+  setTimeout(() => {
+    window.location.href = "dashboard.html";
+  }, 1500);
 }
 
 /**

@@ -105,12 +105,12 @@
               >
             </li>
             <li>
-              <a href="children.html" class="active"
+              <a href="children.html"
                 ><i class="fas fa-child"></i> <span>Children</span></a
               >
             </li>
             <li class="auth-link guest-only">
-              <a href="login.html"
+              <a href="login.html" class="active"
                 ><i class="fas fa-sign-in-alt"></i> <span>Login</span></a
               >
             </li>
@@ -213,5 +213,14 @@
     <!-- JavaScript -->
     <script src="js/auth.js"></script>
     <script src="js/main.js"></script>
+    <script>
+      // Direct initialization of the registration form
+      document.addEventListener("DOMContentLoaded", function () {
+        const registerForm = document.getElementById("register-form");
+        if (registerForm) {
+          registerForm.addEventListener("submit", handleRegister);
+        }
+      });
+    </script>
   </body>
 </html>
