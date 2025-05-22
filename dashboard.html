@@ -28,20 +28,20 @@
         grid-template-columns: 250px 1fr;
         gap: var(--spacing-lg);
       }
-      
+
       @media (max-width: 768px) {
         .dashboard-layout {
           grid-template-columns: 1fr;
         }
       }
-      
+
       .sidebar {
         background-color: var(--light-bg);
         border-radius: var(--border-radius-md);
         padding: var(--spacing-md);
         height: fit-content;
       }
-      
+
       .user-info {
         display: flex;
         flex-direction: column;
@@ -50,7 +50,7 @@
         padding-bottom: var(--spacing-md);
         border-bottom: 1px solid var(--border-color);
       }
-      
+
       .user-avatar {
         width: 100px;
         height: 100px;
@@ -63,29 +63,29 @@
         font-size: 2.5rem;
         margin-bottom: var(--spacing-sm);
       }
-      
+
       .user-name {
         font-weight: bold;
         font-size: 1.2rem;
         margin-bottom: var(--spacing-xs);
       }
-      
+
       .user-email {
         color: var(--text-secondary);
         font-size: 0.9rem;
         margin-bottom: var(--spacing-sm);
       }
-      
+
       .nav-tabs {
         list-style: none;
         padding: 0;
         margin: 0;
       }
-      
+
       .nav-tabs li {
         margin-bottom: var(--spacing-xs);
       }
-      
+
       .tab-button {
         display: flex;
         align-items: center;
@@ -98,31 +98,31 @@
         cursor: pointer;
         transition: all 0.2s ease;
       }
-      
+
       .tab-button i {
         margin-right: var(--spacing-sm);
         width: 20px;
         text-align: center;
       }
-      
+
       .tab-button:hover {
         background-color: rgba(0, 0, 0, 0.05);
       }
-      
+
       .tab-button.active {
         background-color: var(--primary-color);
         color: white;
       }
-      
+
       .logout-button {
         margin-top: var(--spacing-lg);
         width: 100%;
       }
-      
+
       .dashboard-content {
         min-height: 600px;
       }
-      
+
       .welcome-card {
         background-color: var(--primary-color);
         color: white;
@@ -130,22 +130,22 @@
         padding: var(--spacing-lg);
         margin-bottom: var(--spacing-lg);
       }
-      
+
       .welcome-card h2 {
         margin-bottom: var(--spacing-sm);
       }
-      
+
       .welcome-card p {
         opacity: 0.9;
       }
-      
+
       .summary-cards {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         gap: var(--spacing-md);
         margin-bottom: var(--spacing-lg);
       }
-      
+
       .summary-card {
         background-color: white;
         border-radius: var(--border-radius-md);
@@ -153,24 +153,24 @@
         box-shadow: var(--shadow-sm);
         text-align: center;
       }
-      
+
       .summary-card-icon {
         font-size: 2rem;
         margin-bottom: var(--spacing-sm);
         color: var(--primary-color);
       }
-      
+
       .summary-card-value {
         font-size: 2rem;
         font-weight: bold;
         margin-bottom: var(--spacing-xs);
       }
-      
+
       .summary-card-label {
         color: var(--text-secondary);
         font-size: 0.9rem;
       }
-      
+
       .tab-content {
         display: none;
         background-color: white;
@@ -178,86 +178,175 @@
         padding: var(--spacing-lg);
         box-shadow: var(--shadow-sm);
       }
-      
+
       .tab-content.active {
         display: block;
       }
-      
+
       .tab-content h2 {
         margin-bottom: var(--spacing-md);
         color: var(--primary-color);
       }
-      
+
       .form-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: var(--spacing-md);
         margin-bottom: var(--spacing-md);
       }
-      
+
       @media (max-width: 576px) {
         .form-row {
           grid-template-columns: 1fr;
         }
       }
-      
+
       .message {
         padding: var(--spacing-sm);
         border-radius: var(--border-radius-sm);
         margin-bottom: var(--spacing-md);
       }
-      
+
       .success-message {
         background-color: #e8f5e9;
         color: #2e7d32;
       }
-      
+
       .error-message {
         background-color: #ffebee;
         color: #c62828;
       }
-      
+
       .saved-item {
         background-color: var(--light-bg);
         border-radius: var(--border-radius-md);
         padding: var(--spacing-md);
         margin-bottom: var(--spacing-md);
       }
-      
+
       .saved-item-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: var(--spacing-sm);
       }
-      
+
       .saved-date {
         color: var(--text-secondary);
         font-size: 0.9rem;
       }
-      
+
       .saved-item-content {
         margin-bottom: var(--spacing-sm);
       }
-      
+
       .saved-item-actions {
         display: flex;
         justify-content: flex-end;
       }
-      
+
       .btn-sm {
         padding: var(--spacing-xs) var(--spacing-sm);
         font-size: 0.9rem;
       }
-      
+
       .btn-danger {
         background-color: #f44336;
       }
-      
+
       .empty-state {
         text-align: center;
         color: var(--text-secondary);
         padding: var(--spacing-lg);
+      }
+
+      /* Analytics styles */
+      .analytics-section {
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .activity-summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-md);
+      }
+
+      .activity-stat {
+        background-color: var(--light-bg);
+        border-radius: var(--border-radius-md);
+        padding: var(--spacing-md);
+        text-align: center;
+      }
+
+      .activity-value {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--primary-color);
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .activity-label {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      .activity-list {
+        list-style: none;
+        padding: 0;
+        margin: var(--spacing-md) 0 0 0;
+      }
+
+      .activity-item {
+        display: flex;
+        padding: var(--spacing-sm) 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .activity-time {
+        min-width: 150px;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      .activity-description {
+        flex: 1;
+      }
+
+      /* Category badges */
+      .food-categories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+        margin-top: var(--spacing-sm);
+      }
+
+      .category-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.5rem;
+        border-radius: 1rem;
+        font-size: 0.8rem;
+        color: white;
+      }
+
+      .category-badge i {
+        margin-right: 0.25rem;
+      }
+
+      /* Success message */
+      .success-message {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        padding: var(--spacing-sm);
+        border-radius: var(--border-radius-sm);
+        margin-bottom: var(--spacing-md);
+        display: flex;
+        align-items: center;
+      }
+
+      .success-message i {
+        margin-right: var(--spacing-sm);
       }
     </style>
   </head>
@@ -311,9 +400,11 @@
                 <i class="fas fa-user"></i>
               </div>
               <div class="user-name" id="sidebar-user-name">User Name</div>
-              <div class="user-email" id="sidebar-user-email">user@example.com</div>
+              <div class="user-email" id="sidebar-user-email">
+                user@example.com
+              </div>
             </div>
-            
+
             <ul class="nav-tabs">
               <li>
                 <button class="tab-button" data-tab="overview-tab">
@@ -341,7 +432,10 @@
                 </button>
               </li>
               <li>
-                <button class="tab-button" data-tab="children-recommendations-tab">
+                <button
+                  class="tab-button"
+                  data-tab="children-recommendations-tab"
+                >
                   <i class="fas fa-child"></i> Children Recommendations
                 </button>
               </li>
@@ -351,12 +445,12 @@
                 </button>
               </li>
             </ul>
-            
+
             <button id="logout-btn" class="btn btn-secondary logout-button">
               <i class="fas fa-sign-out-alt"></i> Logout
             </button>
           </div>
-          
+
           <!-- Dashboard Content -->
           <div class="dashboard-content">
             <!-- Overview Tab -->
@@ -365,7 +459,7 @@
                 <h2>Welcome, <span id="welcome-name">User</span>!</h2>
                 <p>Last login: <span id="last-login">Never</span></p>
               </div>
-              
+
               <div class="summary-cards">
                 <div class="summary-card">
                   <div class="summary-card-icon">
@@ -374,31 +468,40 @@
                   <div class="summary-card-value" id="saved-meals-count">0</div>
                   <div class="summary-card-label">Saved Meals</div>
                 </div>
-                
+
                 <div class="summary-card">
                   <div class="summary-card-icon">
                     <i class="fas fa-money-bill-wave"></i>
                   </div>
-                  <div class="summary-card-value" id="budget-history-count">0</div>
+                  <div class="summary-card-value" id="budget-history-count">
+                    0
+                  </div>
                   <div class="summary-card-label">Budget Recommendations</div>
                 </div>
-                
+
                 <div class="summary-card">
                   <div class="summary-card-icon">
                     <i class="fas fa-shopping-basket"></i>
                   </div>
-                  <div class="summary-card-value" id="grocery-history-count">0</div>
+                  <div class="summary-card-value" id="grocery-history-count">
+                    0
+                  </div>
                   <div class="summary-card-label">Grocery Analyses</div>
                 </div>
-                
+
                 <div class="summary-card">
                   <div class="summary-card-icon">
                     <i class="fas fa-child"></i>
                   </div>
-                  <div class="summary-card-value" id="children-recommendations-count">0</div>
+                  <div
+                    class="summary-card-value"
+                    id="children-recommendations-count"
+                  >
+                    0
+                  </div>
                   <div class="summary-card-label">Children Recommendations</div>
                 </div>
-                
+
                 <div class="summary-card">
                   <div class="summary-card-icon">
                     <i class="fas fa-calendar-check"></i>
@@ -407,7 +510,7 @@
                   <div class="summary-card-label">Days Active</div>
                 </div>
               </div>
-              
+
               <div class="card">
                 <h3>Quick Actions</h3>
                 <div class="quick-actions">
@@ -415,7 +518,8 @@
                     <i class="fas fa-tachometer-alt"></i> Analyze Groceries
                   </a>
                   <a href="budget.html" class="btn">
-                    <i class="fas fa-money-bill-wave"></i> Get Budget Recommendations
+                    <i class="fas fa-money-bill-wave"></i> Get Budget
+                    Recommendations
                   </a>
                   <a href="children.html" class="btn">
                     <i class="fas fa-child"></i> Children Recommendations
@@ -423,63 +527,63 @@
                 </div>
               </div>
             </div>
-            
+
             <!-- Profile Tab -->
             <div id="profile-tab" class="tab-content">
               <h2>Profile Settings</h2>
-              
+
               <div class="card">
                 <h3>Personal Information</h3>
                 <div id="profile-message" class="message"></div>
-                
+
                 <form id="profile-form">
                   <div class="form-row">
                     <div class="form-group">
                       <label for="profile-name">Name</label>
                       <input type="text" id="profile-name" required />
                     </div>
-                    
+
                     <div class="form-group">
                       <label for="profile-email">Email</label>
                       <input type="email" id="profile-email" required />
                     </div>
                   </div>
-                  
+
                   <button type="submit" class="btn">
                     <i class="fas fa-save"></i> Save Changes
                   </button>
                 </form>
               </div>
-              
-              <div class="card" style="margin-top: var(--spacing-lg);">
+
+              <div class="card" style="margin-top: var(--spacing-lg)">
                 <h3>Change Password</h3>
                 <div id="password-message" class="message"></div>
-                
+
                 <form id="password-form">
                   <div class="form-group">
                     <label for="current-password">Current Password</label>
                     <input type="password" id="current-password" required />
                   </div>
-                  
+
                   <div class="form-row">
                     <div class="form-group">
                       <label for="new-password">New Password</label>
                       <input type="password" id="new-password" required />
                     </div>
-                    
+
                     <div class="form-group">
                       <label for="confirm-password">Confirm New Password</label>
                       <input type="password" id="confirm-password" required />
                     </div>
                   </div>
-                  
+
                   <button type="submit" class="btn">
                     <i class="fas fa-key"></i> Change Password
                   </button>
                 </form>
               </div>
             </div>
-            
+
             <!-- Saved Meals Tab -->
             <div id="saved-meals-tab" class="tab-content">
               <h2>Saved Meals</h2>
@@ -488,7 +592,7 @@
                 <p class="empty-state">No saved meals yet.</p>
               </div>
             </div>
-            
+
             <!-- Budget History Tab -->
             <div id="budget-history-tab" class="tab-content">
               <h2>Budget History</h2>
@@ -497,7 +601,7 @@
                 <p class="empty-state">No budget history yet.</p>
               </div>
             </div>
-            
+
             <!-- Grocery History Tab -->
             <div id="grocery-history-tab" class="tab-content">
               <h2>Grocery History</h2>
@@ -506,7 +610,7 @@
                 <p class="empty-state">No grocery history yet.</p>
               </div>
             </div>
-            
+
             <!-- Children Recommendations Tab -->
             <div id="children-recommendations-tab" class="tab-content">
               <h2>Children Recommendations</h2>
@@ -515,7 +619,7 @@
                 <p class="empty-state">No children recommendations yet.</p>
               </div>
             </div>
-            
+
             <!-- Analytics Tab -->
             <div id="analytics-tab" class="tab-content">
               <h2>Analytics</h2>

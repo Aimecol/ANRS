@@ -388,10 +388,55 @@ function saveGrocerySelection() {
   // Update user data
   currentUser.savedGroceries = savedGroceries;
 
+  // Save to grocery history for dashboard
+  saveGroceryHistory();
+
   // Save to localStorage
   localStorage.setItem("currentUser", JSON.stringify(currentUser));
 
   showSuccess("Your grocery selection has been saved.");
+}
+
+/**
+ * Save grocery analysis to history
+ */
+function saveGroceryHistory() {
+  if (!currentUser) return;
+
+  // Initialize grocery history array if it doesn't exist
+  if (!currentUser.groceryHistory) {
+    currentUser.groceryHistory = [];
+  }
+
+  // Create history entry
+  const historyEntry = {
+    date: new Date().toISOString(),
+    foods: selectedFoods.map((food) => ({
+      id: food.id,
+      name: food.name,
+      category: food.category,
+      quantity: food.quantity,
+      unit: food.unit,
+    })),
+  };
+
+  // Add to history
+  currentUser.groceryHistory.push(historyEntry);
+
+  // Keep only the last 10 entries
+  if (currentUser.groceryHistory.length > 10) {
+    currentUser.groceryHistory.shift();
+  }
+
+  // Log activity if on dashboard
+  if (
+    window.location.pathname.includes("dashboard.html") &&
+    typeof logUserActivity === "function"
+  ) {
+    logUserActivity("save_grocery_analysis", {
+      foodCount: selectedFoods.length,
+    });
+  }
 }
 
 /**
