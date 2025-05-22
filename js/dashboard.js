@@ -29,6 +29,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Set up event listeners
   setupEventListeners();
+
+  // Initialize overview tab
+  initOverviewTab();
+
+  // Set up periodic refresh of summary cards
+  setupPeriodicRefresh();
 });
 
 /**
@@ -123,11 +129,21 @@ function initTabs() {
  * @param {string} tabId - ID of the active tab
  */
 function loadTabData(tabId) {
+  console.log(`Loading data for tab: ${tabId}`);
+
+  // First reload user data to ensure we have the latest information
+  loadUserData();
+
   switch (tabId) {
     case "profile-tab":
       loadProfileData();
       break;
     case "saved-meals-tab":
+      // Reload user data specifically for saved meals
+      userSavedMeals = JSON.parse(
+        localStorage.getItem(`savedMeals_${currentUser.id}`) || "[]"
+      );
+      // Load saved meals
       loadSavedMeals();
       break;
     case "budget-history-tab":
@@ -141,6 +157,12 @@ function loadTabData(tabId) {
       break;
     case "analytics-tab":
       loadAnalyticsData();
+      break;
+    case "overview-tab":
+      // Refresh overview tab data
+      loadRecentActivity();
+      loadLatestRecommendation();
+      loadNutritionInsights();
       break;
   }
 }
@@ -178,6 +200,9 @@ function loadUserData() {
 
   // Update dashboard summary
   updateDashboardSummary();
+
+  // Scan localStorage for any additional data
+  scanLocalStorageForUserData();
 }
 
 /**
@@ -195,6 +220,159 @@ function updateDashboardSummary() {
   // Calculate days active
   const daysActive = calculateDaysActive();
   updateSummaryCard("days-active", daysActive);
+}
+
+/**
+ * Scan localStorage for user data and update summary cards
+ */
+function scanLocalStorageForUserData() {
+  if (!currentUser) return;
+
+  // Get all keys in localStorage
+  const keys = Object.keys(localStorage);
+
+  // Initialize counters
+  let savedMealsCount = userSavedMeals.length;
+  let budgetHistoryCount = userBudgetHistory.length;
+  let groceryHistoryCount = userGroceryHistory.length;
+  let childrenRecommendationsCount = userChildrenRecommendations.length;
+
+  // Check if currentUser has these properties directly
+  if (currentUser.savedMeals && Array.isArray(currentUser.savedMeals)) {
+    savedMealsCount = Math.max(savedMealsCount, currentUser.savedMeals.length);
+  }
+
+  if (currentUser.budgetHistory && Array.isArray(currentUser.budgetHistory)) {
+    budgetHistoryCount = Math.max(
+      budgetHistoryCount,
+      currentUser.budgetHistory.length
+    );
+  }
+
+  if (currentUser.groceryHistory && Array.isArray(currentUser.groceryHistory)) {
+    groceryHistoryCount = Math.max(
+      groceryHistoryCount,
+      currentUser.groceryHistory.length
+    );
+  }
+
+  if (
+    currentUser.childrenRecommendations &&
+    Array.isArray(currentUser.childrenRecommendations)
+  ) {
+    childrenRecommendationsCount = Math.max(
+      childrenRecommendationsCount,
+      currentUser.childrenRecommendations.length
+    );
+  }
+
+  // Scan localStorage for additional data
+  keys.forEach((key) => {
+    // Check for saved meals
+    if (
+      key.startsWith("savedMeals_") ||
+      key.includes("meals") ||
+      key.includes("meal")
+    ) {
+      try {
+        const data = JSON.parse(localStorage.getItem(key));
+        if (Array.isArray(data)) {
+          savedMealsCount = Math.max(savedMealsCount, data.length);
+        } else if (
+          data &&
+          typeof data === "object" &&
+          data.meals &&
+          Array.isArray(data.meals)
+        ) {
+          savedMealsCount = Math.max(savedMealsCount, data.meals.length);
+        }
+      } catch (e) {
+        console.error(`Error parsing localStorage key ${key}:`, e);
+      }
+    }
+
+    // Check for budget history
+    if (key.startsWith("budgetHistory_") || key.includes("budget")) {
+      try {
+        const data = JSON.parse(localStorage.getItem(key));
+        if (Array.isArray(data)) {
+          budgetHistoryCount = Math.max(budgetHistoryCount, data.length);
+        } else if (
+          data &&
+          typeof data === "object" &&
+          data.history &&
+          Array.isArray(data.history)
+        ) {
+          budgetHistoryCount = Math.max(
+            budgetHistoryCount,
+            data.history.length
+          );
+        }
+      } catch (e) {
+        console.error(`Error parsing localStorage key ${key}:`, e);
+      }
+    }
+
+    // Check for grocery history
+    if (key.startsWith("groceryHistory_") || key.includes("grocery")) {
+      try {
+        const data = JSON.parse(localStorage.getItem(key));
+        if (Array.isArray(data)) {
+          groceryHistoryCount = Math.max(groceryHistoryCount, data.length);
+        } else if (
+          data &&
+          typeof data === "object" &&
+          data.history &&
+          Array.isArray(data.history)
+        ) {
+          groceryHistoryCount = Math.max(
+            groceryHistoryCount,
+            data.history.length
+          );
+        }
+      } catch (e) {
+        console.error(`Error parsing localStorage key ${key}:`, e);
+      }
+    }
+
+    // Check for children recommendations
+    if (
+      key.startsWith("childrenRecommendations_") ||
+      key.includes("children") ||
+      key.includes("child")
+    ) {
+      try {
+        const data = JSON.parse(localStorage.getItem(key));
+        if (Array.isArray(data)) {
+          childrenRecommendationsCount = Math.max(
+            childrenRecommendationsCount,
+            data.length
+          );
+        } else if (
+          data &&
+          typeof data === "object" &&
+          data.recommendations &&
+          Array.isArray(data.recommendations)
+        ) {
+          childrenRecommendationsCount = Math.max(
+            childrenRecommendationsCount,
+            data.recommendations.length
+          );
+        }
+      } catch (e) {
+        console.error(`Error parsing localStorage key ${key}:`, e);
+      }
+    }
+  });
+
+  // Update summary cards with the new counts
+  updateSummaryCard("saved-meals-count", savedMealsCount);
+  updateSummaryCard("budget-history-count", budgetHistoryCount);
+  updateSummaryCard("grocery-history-count", groceryHistoryCount);
+  updateSummaryCard(
+    "children-recommendations-count",
+    childrenRecommendationsCount
+  );
 }
 
 /**
@@ -228,6 +406,225 @@ function calculateDaysActive() {
 }
 
 /**
+ * Initialize overview tab with dynamic content
+ */
+function initOverviewTab() {
+  // Set up event listeners for overview tab
+  const viewProfileBtn = document.getElementById("view-profile-btn");
+  if (viewProfileBtn) {
+    viewProfileBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      // Find the profile tab button and click it
+      const profileTabBtn = document.querySelector(
+        '.tab-button[data-tab="profile-tab"]'
+      );
+      if (profileTabBtn) {
+        profileTabBtn.click();
+      }
+    });
+  }
+
+  const viewAllActivityBtn = document.getElementById("view-all-activity-btn");
+  if (viewAllActivityBtn) {
+    viewAllActivityBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      // Find the analytics tab button and click it
+      const analyticsTabBtn = document.querySelector(
+        '.tab-button[data-tab="analytics-tab"]'
+      );
+      if (analyticsTabBtn) {
+        analyticsTabBtn.click();
+      }
+    });
+  }
+
+  // Load recent activity
+  loadRecentActivity();
+
+  // Load latest recommendation
+  loadLatestRecommendation();
+
+  // Load nutrition insights
+  loadNutritionInsights();
+}
+
+/**
+ * Load recent activity for overview tab
+ */
+function loadRecentActivity() {
+  const recentActivityList = document.getElementById("recent-activity-list");
+  if (!recentActivityList) return;
+
+  if (!userActivityData || userActivityData.length === 0) {
+    recentActivityList.innerHTML =
+      '<li class="activity-placeholder">No recent activity yet.</li>';
+    return;
+  }
+
+  // Sort activities by date (newest first)
+  const sortedActivities = [...userActivityData].sort(
+    (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+  );
+
+  // Take only the 5 most recent activities
+  const recentActivities = sortedActivities.slice(0, 5);
+
+  recentActivityList.innerHTML = recentActivities
+    .map((activity) => {
+      const date = new Date(activity.timestamp);
+      const formattedDate = date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      let activityText = "";
+
+      switch (activity.type) {
+        case "profile_update":
+          activityText = "Updated profile information";
+          break;
+        case "password_change":
+          activityText = "Changed password";
+          break;
+        case "save_meal":
+          activityText = "Saved a meal recommendation";
+          break;
+        case "delete_meal":
+          activityText = "Deleted a saved meal";
+          break;
+        case "save_child_recommendation":
+          activityText = `Saved recommendations for ${activity.details.ageValue} ${activity.details.ageType} old child`;
+          break;
+        case "delete_child_recommendation":
+          activityText = "Deleted a child recommendation";
+          break;
+        case "login":
+          activityText = "Logged in";
+          break;
+        case "logout":
+          activityText = "Logged out";
+          break;
+        default:
+          activityText = `Activity: ${activity.type}`;
+      }
+
+      return `
+      <li class="activity-item">
+        <div class="activity-time">${formattedDate}</div>
+        <div class="activity-description">${activityText}</div>
+      </li>
+    `;
+    })
+    .join("");
+}
+
+/**
+ * Load latest recommendation for overview tab
+ */
+function loadLatestRecommendation() {
+  const latestRecommendationContainer = document.getElementById(
+    "latest-recommendation"
+  );
+  if (!latestRecommendationContainer) return;
+
+  // Check for latest child recommendation
+  if (
+    currentUser.childrenRecommendations &&
+    currentUser.childrenRecommendations.length > 0
+  ) {
+    const sortedRecs = [...currentUser.childrenRecommendations].sort(
+      (a, b) => new Date(b.savedAt) - new Date(a.savedAt)
+    );
+    const latestRec = sortedRecs[0];
+
+    latestRecommendationContainer.innerHTML = `
+      <div class="latest-recommendation-item">
+        <h4>Children's Nutrition Guide</h4>
+        <p><strong>Age:</strong> ${latestRec.ageValue} ${latestRec.ageType}</p>
+        <p><strong>Stage:</strong> ${latestRec.recommendations.stage}</p>
+        <p>${latestRec.recommendations.description.substring(0, 150)}${
+      latestRec.recommendations.description.length > 150 ? "..." : ""
+    }</p>
+        <a href="#" class="btn btn-sm view-recommendation-btn" data-id="${
+          latestRec.id
+        }">
+          <i class="fas fa-eye"></i> View Full Recommendation
+        </a>
+      </div>
+    `;
+
+    // Add event listener to view button
+    const viewBtn = latestRecommendationContainer.querySelector(
+      ".view-recommendation-btn"
+    );
+    if (viewBtn) {
+      viewBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        // Find the children recommendations tab button and click it
+        const childrenTabBtn = document.querySelector(
+          '.tab-button[data-tab="children-recommendations-tab"]'
+        );
+        if (childrenTabBtn) {
+          childrenTabBtn.click();
+        }
+      });
+    }
+
+    return;
+  }
+
+  // Check for latest meal recommendation
+  if (currentUser.savedMeals && currentUser.savedMeals.length > 0) {
+    const sortedMeals = [...currentUser.savedMeals].sort(
+      (a, b) => new Date(b.savedAt) - new Date(a.savedAt)
+    );
+    const latestMeal = sortedMeals[0];
+
+    latestRecommendationContainer.innerHTML = `
+      <div class="latest-recommendation-item">
+        <h4>Meal Plan: ${latestMeal.name}</h4>
+        <p><strong>Cost:</strong> ${latestMeal.totalCost} RWF</p>
+        <p><strong>Foods:</strong> ${latestMeal.foods
+          .slice(0, 3)
+          .map((food) => food.name.en)
+          .join(", ")}${latestMeal.foods.length > 3 ? "..." : ""}</p>
+        <a href="#" class="btn btn-sm view-meal-btn">
+          <i class="fas fa-eye"></i> View Saved Meals
+        </a>
+      </div>
+    `;
+
+    // Add event listener to view button
+    const viewBtn =
+      latestRecommendationContainer.querySelector(".view-meal-btn");
+    if (viewBtn) {
+      viewBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        // Find the saved meals tab button and click it
+        const mealsTabBtn = document.querySelector(
+          '.tab-button[data-tab="saved-meals-tab"]'
+        );
+        if (mealsTabBtn) {
+          mealsTabBtn.click();
+        }
+      });
+    }
+
+    return;
+  }
+
+  // If no recommendations found
+  latestRecommendationContainer.innerHTML = `
+    <div class="recommendation-placeholder">
+      <p>Your latest recommendation will appear here.</p>
+      <p>Start by creating a meal plan or getting children's nutrition advice!</p>
+    </div>
+  `;
+}
+
+/**
  * Set up event listeners for dashboard
  */
 function setupEventListeners() {
@@ -248,6 +645,318 @@ function setupEventListeners() {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", handleLogout);
   }
+
+  // Refresh summary button
+  const refreshSummaryBtn = document.getElementById("refresh-summary-btn");
+  if (refreshSummaryBtn) {
+    refreshSummaryBtn.addEventListener("click", handleRefreshSummary);
+  }
+
+  // Create sample meals button
+  const createSampleMealsBtn = document.getElementById(
+    "create-sample-meals-btn"
+  );
+  if (createSampleMealsBtn) {
+    createSampleMealsBtn.addEventListener("click", () => {
+      // Confirm before creating sample data
+      if (
+        confirm(
+          "This will create sample meal data for testing purposes. Continue?"
+        )
+      ) {
+        createSampleMealData();
+      }
+    });
+  }
+}
+
+/**
+ * Handle refresh summary button click
+ */
+function handleRefreshSummary() {
+  // Add spinning animation to the refresh icon
+  const refreshIcon = document.querySelector("#refresh-summary-btn i");
+  if (refreshIcon) {
+    refreshIcon.classList.add("fa-spin");
+  }
+
+  // Reload user data
+  loadUserData();
+
+  // Scan localStorage for any additional data
+  scanLocalStorageForUserData();
+
+  // Refresh recent activity
+  loadRecentActivity();
+
+  // Refresh latest recommendation
+  loadLatestRecommendation();
+
+  // Show success message
+  const successMessage = document.createElement("div");
+  successMessage.className = "success-message";
+  successMessage.innerHTML =
+    '<i class="fas fa-check-circle"></i> Dashboard data refreshed successfully!';
+
+  // Find a good place to show the message
+  const summaryCardsHeader = document.querySelector(".summary-cards-header");
+  if (summaryCardsHeader) {
+    summaryCardsHeader.parentNode.insertBefore(
+      successMessage,
+      summaryCardsHeader.nextSibling
+    );
+  }
+
+  // Remove spinning animation after 1 second
+  setTimeout(() => {
+    if (refreshIcon) {
+      refreshIcon.classList.remove("fa-spin");
+    }
+
+    // Remove success message after 3 seconds
+    setTimeout(() => {
+      if (successMessage.parentNode) {
+        successMessage.parentNode.removeChild(successMessage);
+      }
+    }, 3000);
+  }, 1000);
+}
+
+/**
+ * Load nutrition insights for overview tab
+ */
+function loadNutritionInsights() {
+  const insightsPlaceholder = document.querySelector(".insights-placeholder");
+  const insightsContent = document.getElementById("insights-content");
+
+  if (!insightsPlaceholder || !insightsContent) return;
+
+  // Check if we have grocery history to generate insights
+  if (currentUser.groceryHistory && currentUser.groceryHistory.length > 0) {
+    // Calculate balance score
+    const balanceScore = calculateBalanceScore();
+
+    // Update balance progress bar
+    const balanceProgress = document.getElementById("balance-progress");
+    const balanceText = document.getElementById("balance-text");
+
+    if (balanceProgress) {
+      balanceProgress.style.width = `${balanceScore}%`;
+
+      // Change color based on score
+      if (balanceScore < 40) {
+        balanceProgress.style.backgroundColor = "#f44336"; // Red
+      } else if (balanceScore < 70) {
+        balanceProgress.style.backgroundColor = "#ff9800"; // Orange
+      } else {
+        balanceProgress.style.backgroundColor = "#4caf50"; // Green
+      }
+    }
+
+    if (balanceText) {
+      if (balanceScore < 40) {
+        balanceText.textContent =
+          "Your diet could use more balance. Try adding more variety.";
+      } else if (balanceScore < 70) {
+        balanceText.textContent =
+          "Your diet is moderately balanced. Keep improving!";
+      } else {
+        balanceText.textContent = "Great job! Your diet is well-balanced.";
+      }
+    }
+
+    // Generate category distribution
+    const categoryDistribution = document.getElementById(
+      "category-distribution"
+    );
+    if (categoryDistribution) {
+      const distribution = calculateCategoryDistribution();
+
+      categoryDistribution.innerHTML = Object.keys(distribution)
+        .map((category) => {
+          const categoryInfo = foodData?.categories?.find(
+            (c) => c.id === category
+          );
+          if (!categoryInfo) return "";
+
+          return `
+          <span class="category-badge" style="background-color: ${
+            categoryInfo.color || "#ccc"
+          };">
+            <i class="fas fa-${categoryInfo.icon || "circle"}"></i>
+            ${categoryInfo.name?.en || category}: ${distribution[category]}%
+          </span>
+        `;
+        })
+        .join("");
+    }
+
+    // Update budget efficiency
+    const budgetEfficiencyText = document.getElementById(
+      "budget-efficiency-text"
+    );
+    if (
+      budgetEfficiencyText &&
+      currentUser.budgetHistory &&
+      currentUser.budgetHistory.length > 0
+    ) {
+      const efficiency = calculateBudgetEfficiency();
+
+      if (efficiency < 40) {
+        budgetEfficiencyText.textContent =
+          "You could improve your budget efficiency. Try our budget recommendations.";
+      } else if (efficiency < 70) {
+        budgetEfficiencyText.textContent =
+          "Your budget efficiency is good. Keep using our budget planner for better results.";
+      } else {
+        budgetEfficiencyText.textContent =
+          "Excellent budget efficiency! You are making the most of your food budget.";
+      }
+    }
+
+    // Show insights content and hide placeholder
+    insightsPlaceholder.classList.add("hidden");
+    insightsContent.classList.remove("hidden");
+  } else {
+    // Show placeholder if no data
+    insightsPlaceholder.classList.remove("hidden");
+    insightsContent.classList.add("hidden");
+  }
+}
+
+/**
+ * Calculate balance score based on grocery history
+ * @returns {number} Balance score (0-100)
+ */
+function calculateBalanceScore() {
+  if (!currentUser.groceryHistory || currentUser.groceryHistory.length === 0)
+    return 0;
+
+  // Get the most recent grocery analysis
+  const sortedHistory = [...currentUser.groceryHistory].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+  const latestAnalysis = sortedHistory[0];
+
+  // Count categories
+  const categoryCounts = {};
+
+  // Initialize category counts
+  if (window.foodData && window.foodData.categories) {
+    window.foodData.categories.forEach((category) => {
+      categoryCounts[category.id] = 0;
+    });
+  } else {
+    // Fallback if foodData is not available
+    latestAnalysis.foods.forEach((food) => {
+      if (!categoryCounts[food.category]) {
+        categoryCounts[food.category] = 0;
+      }
+    });
+  }
+
+  latestAnalysis.foods.forEach((food) => {
+    if (categoryCounts[food.category] !== undefined) {
+      categoryCounts[food.category]++;
+    }
+  });
+
+  // Check if all categories are represented
+  const categoryCount = Object.keys(categoryCounts).length;
+  const categoriesWithFood = Object.values(categoryCounts).filter(
+    (count) => count > 0
+  ).length;
+
+  // Calculate balance score (0-100)
+  const baseScore = (categoriesWithFood / categoryCount) * 100;
+
+  // Adjust score based on distribution
+  let distributionPenalty = 0;
+
+  // Calculate standard deviation of category counts
+  const counts = Object.values(categoryCounts);
+  const mean = counts.reduce((sum, count) => sum + count, 0) / counts.length;
+  const variance =
+    counts.reduce((sum, count) => sum + Math.pow(count - mean, 2), 0) /
+    counts.length;
+  const stdDev = Math.sqrt(variance);
+
+  // Penalize high standard deviation (uneven distribution)
+  if (mean > 0) {
+    distributionPenalty = Math.min(30, (stdDev / mean) * 30);
+  }
+
+  return Math.max(
+    0,
+    Math.min(100, Math.round(baseScore - distributionPenalty))
+  );
+}
+
+/**
+ * Calculate category distribution based on grocery history
+ * @returns {Object} Category distribution percentages
+ */
+function calculateCategoryDistribution() {
+  if (!currentUser.groceryHistory || currentUser.groceryHistory.length === 0)
+    return {};
+
+  // Get the most recent grocery analysis
+  const sortedHistory = [...currentUser.groceryHistory].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+  const latestAnalysis = sortedHistory[0];
+
+  // Count categories
+  const categoryCounts = {};
+
+  // Initialize category counts
+  latestAnalysis.foods.forEach((food) => {
+    if (!categoryCounts[food.category]) {
+      categoryCounts[food.category] = 0;
+    }
+    categoryCounts[food.category]++;
+  });
+
+  // Calculate percentages
+  const totalItems = Object.values(categoryCounts).reduce(
+    (sum, count) => sum + count,
+    0
+  );
+  const distribution = {};
+
+  Object.keys(categoryCounts).forEach((category) => {
+    if (totalItems > 0) {
+      distribution[category] = Math.round(
+        (categoryCounts[category] / totalItems) * 100
+      );
+    } else {
+      distribution[category] = 0;
+    }
+  });
+
+  return distribution;
+}
+
+/**
+ * Calculate budget efficiency score
+ * @returns {number} Efficiency score (0-100)
+ */
+function calculateBudgetEfficiency() {
+  if (!currentUser.budgetHistory || currentUser.budgetHistory.length === 0)
+    return 0;
+
+  // Get the most recent budget recommendation
+  const sortedHistory = [...currentUser.budgetHistory].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+  const latestBudget = sortedHistory[0];
+
+  // Simple efficiency calculation based on recommendations count
+  // More recommendations = more options = better efficiency
+  const recommendationsCount = latestBudget.recommendationsCount || 0;
+
+  // Scale: 0 recommendations = 0%, 3+ recommendations = 100%
+  return Math.min(100, Math.round((recommendationsCount / 3) * 100));
 }
 
 /**
@@ -456,44 +1165,148 @@ function loadSavedMeals() {
   const savedMealsContainer = document.getElementById("saved-meals-list");
   if (!savedMealsContainer) return;
 
-  if (userSavedMeals.length === 0) {
-    savedMealsContainer.innerHTML =
-      '<p class="empty-state">No saved meals yet. Save meals from the Budget Recommendations page.</p>';
+  // Combine meals from both sources
+  let allMeals = [...userSavedMeals];
+
+  // Add meals from currentUser if they exist and aren't already included
+  if (
+    currentUser &&
+    currentUser.savedMeals &&
+    Array.isArray(currentUser.savedMeals)
+  ) {
+    currentUser.savedMeals.forEach((meal) => {
+      // Check if this meal is already in allMeals by ID
+      if (!allMeals.some((m) => m.id === meal.id)) {
+        allMeals.push(meal);
+      }
+    });
+  }
+
+  // Check for meals in localStorage
+  const keys = Object.keys(localStorage);
+  keys.forEach((key) => {
+    if (
+      key.startsWith("savedMeals_") ||
+      key.includes("meals") ||
+      key.includes("meal")
+    ) {
+      try {
+        const data = JSON.parse(localStorage.getItem(key));
+        if (Array.isArray(data)) {
+          data.forEach((meal) => {
+            if (meal.id && !allMeals.some((m) => m.id === meal.id)) {
+              allMeals.push(meal);
+            }
+          });
+        } else if (
+          data &&
+          typeof data === "object" &&
+          data.meals &&
+          Array.isArray(data.meals)
+        ) {
+          data.meals.forEach((meal) => {
+            if (meal.id && !allMeals.some((m) => m.id === meal.id)) {
+              allMeals.push(meal);
+            }
+          });
+        }
+      } catch (e) {
+        console.error(`Error parsing localStorage key ${key}:`, e);
+      }
+    }
+  });
+
+  // Show empty state if no meals found
+  if (allMeals.length === 0) {
+    savedMealsContainer.innerHTML = `
+      <div class="empty-state">
+        <p>No saved meals yet. Save meals from the Budget Recommendations page.</p>
+        <button id="refresh-meals-btn" class="btn btn-sm">
+          <i class="fas fa-sync-alt"></i> Refresh Meals
+        </button>
+      </div>
+    `;
+
+    // Add event listener to refresh button
+    const refreshBtn = document.getElementById("refresh-meals-btn");
+    if (refreshBtn) {
+      refreshBtn.addEventListener("click", () => {
+        // Add spinning animation
+        const icon = refreshBtn.querySelector("i");
+        if (icon) icon.classList.add("fa-spin");
+
+        // Reload user data and scan localStorage
+        loadUserData();
+
+        // Remove spinning animation after 1 second
+        setTimeout(() => {
+          if (icon) icon.classList.remove("fa-spin");
+          // Reload saved meals
+          loadSavedMeals();
+        }, 1000);
+      });
+    }
+
     return;
   }
 
   // Sort meals by date (newest first)
-  const sortedMeals = [...userSavedMeals].sort(
-    (a, b) => new Date(b.savedAt) - new Date(a.savedAt)
+  const sortedMeals = [...allMeals].sort(
+    (a, b) =>
+      new Date(b.savedAt || b.date || 0) - new Date(a.savedAt || a.date || 0)
   );
 
+  // Add refresh button at the top
+  savedMealsContainer.innerHTML = `
+    <div class="saved-meals-header">
+      <h3>Your Saved Meals (${sortedMeals.length})</h3>
+      <button id="refresh-meals-btn" class="btn btn-sm" title="Refresh saved meals">
+        <i class="fas fa-sync-alt"></i> Refresh
+      </button>
+    </div>
+  `;
+
+  // Create meals container
+  const mealsListContainer = document.createElement("div");
+  mealsListContainer.className = "saved-meals-list-container";
+
   // Generate HTML for saved meals
-  savedMealsContainer.innerHTML = sortedMeals
+  mealsListContainer.innerHTML = sortedMeals
     .map(
       (meal) => `
     <div class="saved-item">
       <div class="saved-item-header">
-        <h3>${meal.name}</h3>
-        <span class="saved-date">${formatDate(meal.savedAt)}</span>
+        <h3>${meal.name || "Unnamed Meal"}</h3>
+        <span class="saved-date">${formatDate(
+          meal.savedAt || meal.date || new Date()
+        )}</span>
       </div>
       <div class="saved-item-content">
         <div class="meal-ingredients">
           <h4>Ingredients:</h4>
           <ul>
-            ${meal.foods
-              .map(
-                (food) => `
-              <li>
-                <span class="food-name">${food.name.en} (${food.name.rw})</span>
-                <span class="food-quantity">${food.quantity} ${food.unit}</span>
-              </li>
-            `
-              )
-              .join("")}
+            ${
+              meal.foods && Array.isArray(meal.foods)
+                ? meal.foods
+                    .map(
+                      (food) => `
+                  <li>
+                    <span class="food-name">${
+                      food.name?.en || food.name || "Unknown"
+                    } ${food.name?.rw ? `(${food.name.rw})` : ""}</span>
+                    <span class="food-quantity">${food.quantity || 1} ${
+                        food.unit || "unit"
+                      }</span>
+                  </li>
+                `
+                    )
+                    .join("")
+                : "<li>No ingredients information available</li>"
+            }
           </ul>
         </div>
         <div class="meal-cost">
-          <strong>Total Cost:</strong> ${meal.totalCost} RWF
+          <strong>Total Cost:</strong> ${meal.totalCost || "N/A"} RWF
         </div>
       </div>
       <div class="saved-item-actions">
@@ -508,6 +1321,9 @@ function loadSavedMeals() {
     )
     .join("");
 
+  // Append meals list to container
+  savedMealsContainer.appendChild(mealsListContainer);
+
   // Add event listeners to delete buttons
   const deleteButtons =
     savedMealsContainer.querySelectorAll(".delete-meal-btn");
@@ -517,6 +1333,26 @@ function loadSavedMeals() {
       deleteSavedMeal(mealId);
     });
   });
+
+  // Add event listener to refresh button
+  const refreshBtn = document.getElementById("refresh-meals-btn");
+  if (refreshBtn) {
+    refreshBtn.addEventListener("click", () => {
+      // Add spinning animation
+      const icon = refreshBtn.querySelector("i");
+      if (icon) icon.classList.add("fa-spin");
+
+      // Reload user data and scan localStorage
+      loadUserData();
+
+      // Remove spinning animation after 1 second
+      setTimeout(() => {
+        if (icon) icon.classList.remove("fa-spin");
+        // Reload saved meals
+        loadSavedMeals();
+      }, 1000);
+    });
+  }
 }
 
 /**
@@ -526,7 +1362,12 @@ function loadSavedMeals() {
 function deleteSavedMeal(mealId) {
   if (!currentUser || !mealId) return;
 
-  // Filter out the meal to delete
+  // Show confirmation dialog
+  if (!confirm("Are you sure you want to delete this meal?")) {
+    return;
+  }
+
+  // Filter out the meal to delete from userSavedMeals
   userSavedMeals = userSavedMeals.filter((meal) => meal.id !== mealId);
 
   // Save updated meals to localStorage
@@ -534,6 +1375,76 @@ function deleteSavedMeal(mealId) {
     `savedMeals_${currentUser.id}`,
     JSON.stringify(userSavedMeals)
   );
+
+  // Also check if the meal is in currentUser.savedMeals
+  if (currentUser.savedMeals && Array.isArray(currentUser.savedMeals)) {
+    currentUser.savedMeals = currentUser.savedMeals.filter(
+      (meal) => meal.id !== mealId
+    );
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+  }
+
+  // Check other localStorage keys that might contain this meal
+  const keys = Object.keys(localStorage);
+  keys.forEach((key) => {
+    if (
+      key.startsWith("savedMeals_") ||
+      key.includes("meals") ||
+      key.includes("meal")
+    ) {
+      try {
+        const data = JSON.parse(localStorage.getItem(key));
+        let updated = false;
+
+        if (Array.isArray(data)) {
+          const filteredData = data.filter((meal) => meal.id !== mealId);
+          if (filteredData.length !== data.length) {
+            localStorage.setItem(key, JSON.stringify(filteredData));
+            updated = true;
+          }
+        } else if (
+          data &&
+          typeof data === "object" &&
+          data.meals &&
+          Array.isArray(data.meals)
+        ) {
+          const filteredMeals = data.meals.filter((meal) => meal.id !== mealId);
+          if (filteredMeals.length !== data.meals.length) {
+            data.meals = filteredMeals;
+            localStorage.setItem(key, JSON.stringify(data));
+            updated = true;
+          }
+        }
+
+        if (updated) {
+          console.log(`Updated meal data in localStorage key: ${key}`);
+        }
+      } catch (e) {
+        console.error(`Error updating localStorage key ${key}:`, e);
+      }
+    }
+  });
+
+  // Show success message
+  const successMessage = document.createElement("div");
+  successMessage.className = "success-message";
+  successMessage.innerHTML =
+    '<i class="fas fa-check-circle"></i> Meal deleted successfully!';
+
+  const savedMealsContainer = document.getElementById("saved-meals-list");
+  if (savedMealsContainer) {
+    savedMealsContainer.insertBefore(
+      successMessage,
+      savedMealsContainer.firstChild
+    );
+
+    // Remove success message after 3 seconds
+    setTimeout(() => {
+      if (successMessage.parentNode) {
+        successMessage.parentNode.removeChild(successMessage);
+      }
+    }, 3000);
+  }
 
   // Reload saved meals
   loadSavedMeals();
@@ -1022,4 +1933,157 @@ function generateRecentActivityList() {
     `;
     })
     .join("");
+}
+
+/**
+ * Set up periodic refresh of summary cards
+ * This ensures the dashboard stays up-to-date with any changes to localStorage
+ */
+function setupPeriodicRefresh() {
+  // Refresh summary cards every 30 seconds
+  setInterval(() => {
+    // Reload user data from localStorage
+    loadUserData();
+
+    // Scan localStorage for any additional data
+    scanLocalStorageForUserData();
+
+    // Refresh recent activity if on overview tab
+    const overviewTab = document.getElementById("overview-tab");
+    if (overviewTab && overviewTab.classList.contains("active")) {
+      loadRecentActivity();
+      loadLatestRecommendation();
+    }
+  }, 30000); // 30 seconds
+}
+
+/**
+ * Create sample meal data for testing
+ * This function is for development purposes only
+ */
+function createSampleMealData() {
+  if (!currentUser) return;
+
+  // Check if we already have sample data
+  if (userSavedMeals.length > 0) {
+    console.log("Sample meal data already exists");
+    return;
+  }
+
+  // Create sample meals
+  const sampleMeals = [
+    {
+      id: "meal_" + Date.now(),
+      name: "Balanced Rwandan Breakfast",
+      savedAt: new Date().toISOString(),
+      totalCost: 2500,
+      foods: [
+        {
+          id: "food1",
+          name: {
+            en: "Sweet Potatoes",
+            rw: "Ibijumba",
+          },
+          quantity: 2,
+          unit: "kg",
+          category: "starchy",
+        },
+        {
+          id: "food2",
+          name: {
+            en: "Beans",
+            rw: "Ibishyimbo",
+          },
+          quantity: 1,
+          unit: "kg",
+          category: "protein",
+        },
+        {
+          id: "food3",
+          name: {
+            en: "Avocado",
+            rw: "Avoka",
+          },
+          quantity: 3,
+          unit: "pieces",
+          category: "fruits",
+        },
+      ],
+    },
+    {
+      id: "meal_" + (Date.now() + 1),
+      name: "Nutritious Lunch Combo",
+      savedAt: new Date(Date.now() - 86400000).toISOString(), // Yesterday
+      totalCost: 3200,
+      foods: [
+        {
+          id: "food4",
+          name: {
+            en: "Rice",
+            rw: "Umuceri",
+          },
+          quantity: 2,
+          unit: "kg",
+          category: "starchy",
+        },
+        {
+          id: "food5",
+          name: {
+            en: "Chicken",
+            rw: "Inkoko",
+          },
+          quantity: 1,
+          unit: "kg",
+          category: "protein",
+        },
+        {
+          id: "food6",
+          name: {
+            en: "Carrots",
+            rw: "Karoti",
+          },
+          quantity: 0.5,
+          unit: "kg",
+          category: "vegetables",
+        },
+        {
+          id: "food7",
+          name: {
+            en: "Tomatoes",
+            rw: "Inyanya",
+          },
+          quantity: 0.5,
+          unit: "kg",
+          category: "vegetables",
+        },
+      ],
+    },
+  ];
+
+  // Save sample meals to localStorage
+  userSavedMeals = sampleMeals;
+  localStorage.setItem(
+    `savedMeals_${currentUser.id}`,
+    JSON.stringify(sampleMeals)
+  );
+
+  // Also add to currentUser
+  if (!currentUser.savedMeals) {
+    currentUser.savedMeals = [];
+  }
+  currentUser.savedMeals = [...currentUser.savedMeals, ...sampleMeals];
+  localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+  console.log("Sample meal data created successfully");
+
+  // Update dashboard
+  updateDashboardSummary();
+
+  // Log activity
+  logUserActivity("create_sample_data", { count: sampleMeals.length });
+
+  // Show success message
+  alert(
+    "Sample meal data created successfully. Check the Saved Meals tab to view them."
+  );
 }

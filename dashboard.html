@@ -129,6 +129,8 @@
         border-radius: var(--border-radius-md);
         padding: var(--spacing-lg);
         margin-bottom: var(--spacing-lg);
+        display: flex;
+        flex-direction: column;
       }
 
       .welcome-card h2 {
@@ -137,6 +139,212 @@
 
       .welcome-card p {
         opacity: 0.9;
+      }
+
+      .welcome-actions {
+        margin-top: var(--spacing-md);
+        align-self: flex-start;
+      }
+
+      .overview-layout {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: var(--spacing-lg);
+      }
+
+      @media (max-width: 992px) {
+        .overview-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        padding-bottom: var(--spacing-sm);
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: var(--spacing-md);
+      }
+
+      .card-header h3 {
+        margin: 0;
+      }
+
+      .card-header i {
+        margin-right: var(--spacing-sm);
+        color: var(--primary-color);
+      }
+
+      .card-footer {
+        padding-top: var(--spacing-sm);
+        border-top: 1px solid var(--border-color);
+        margin-top: var(--spacing-md);
+        text-align: right;
+      }
+
+      .btn-text {
+        background: none;
+        color: var(--primary-color);
+        padding: 0;
+        text-decoration: underline;
+      }
+
+      .btn-text:hover {
+        background: none;
+        color: var(--primary-dark);
+      }
+
+      .nutrition-insights-card,
+      .quick-actions-card {
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .insights-placeholder,
+      .recommendation-placeholder,
+      .activity-placeholder {
+        color: var(--text-secondary);
+        text-align: center;
+        padding: var(--spacing-md);
+      }
+
+      .insight-item {
+        display: flex;
+        margin-bottom: var(--spacing-md);
+        padding-bottom: var(--spacing-md);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .insight-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      .insight-icon {
+        font-size: 2rem;
+        color: var(--primary-color);
+        margin-right: var(--spacing-md);
+        width: 40px;
+        text-align: center;
+      }
+
+      .insight-text {
+        flex: 1;
+      }
+
+      .insight-text h4 {
+        margin-top: 0;
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .progress-bar {
+        height: 8px;
+        background-color: var(--light-bg);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .progress {
+        height: 100%;
+        background-color: var(--primary-color);
+        transition: width 0.3s ease;
+      }
+
+      .category-distribution {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+        margin-top: var(--spacing-xs);
+      }
+
+      .action-card {
+        display: flex;
+        align-items: center;
+        background-color: var(--light-bg);
+        border-radius: var(--border-radius-md);
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+        transition: all 0.2s ease;
+        text-decoration: none;
+        color: var(--text-primary);
+      }
+
+      .action-card:hover {
+        background-color: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .action-card:last-child {
+        margin-bottom: 0;
+      }
+
+      .action-icon {
+        font-size: 2rem;
+        margin-right: var(--spacing-md);
+        width: 40px;
+        text-align: center;
+      }
+
+      .action-text {
+        flex: 1;
+      }
+
+      .action-text h4 {
+        margin-top: 0;
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .action-text p {
+        margin: 0;
+        font-size: 0.9rem;
+      }
+
+      .recent-activity-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .recent-activity-list li {
+        padding: var(--spacing-sm) 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .recent-activity-list li:last-child {
+        border-bottom: none;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .summary-cards-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .summary-cards-header h3 {
+        margin: 0;
+        color: var(--primary-color);
+      }
+
+      .summary-cards-header button {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+      }
+
+      .summary-cards-header button i {
+        transition: transform 0.3s ease;
+      }
+
+      .summary-cards-header button:hover i {
+        transform: rotate(180deg);
       }
 
       .summary-cards {
@@ -152,6 +360,12 @@
         padding: var(--spacing-md);
         box-shadow: var(--shadow-sm);
         text-align: center;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .summary-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-md);
       }
 
       .summary-card-icon {
@@ -186,6 +400,22 @@
       .tab-content h2 {
         margin-bottom: var(--spacing-md);
         color: var(--primary-color);
+      }
+
+      .tab-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-md);
+      }
+
+      .tab-header h2 {
+        margin-bottom: 0;
+      }
+
+      .tab-actions {
+        display: flex;
+        gap: var(--spacing-sm);
       }
 
       .form-row {
@@ -258,6 +488,44 @@
         text-align: center;
         color: var(--text-secondary);
         padding: var(--spacing-lg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-md);
+      }
+
+      .saved-meals-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-md);
+        padding-bottom: var(--spacing-sm);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .saved-meals-header h3 {
+        margin: 0;
+        color: var(--primary-color);
+      }
+
+      .saved-meals-header button {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+      }
+
+      .saved-meals-header button i {
+        transition: transform 0.3s ease;
+      }
+
+      .saved-meals-header button:hover i {
+        transform: rotate(180deg);
+      }
+
+      .saved-meals-list-container {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
       }
 
       /* Analytics styles */
@@ -458,72 +726,230 @@
               <div class="welcome-card">
                 <h2>Welcome, <span id="welcome-name">User</span>!</h2>
                 <p>Last login: <span id="last-login">Never</span></p>
-              </div>
-
-              <div class="summary-cards">
-                <div class="summary-card">
-                  <div class="summary-card-icon">
-                    <i class="fas fa-utensils"></i>
-                  </div>
-                  <div class="summary-card-value" id="saved-meals-count">0</div>
-                  <div class="summary-card-label">Saved Meals</div>
-                </div>
-
-                <div class="summary-card">
-                  <div class="summary-card-icon">
-                    <i class="fas fa-money-bill-wave"></i>
-                  </div>
-                  <div class="summary-card-value" id="budget-history-count">
-                    0
-                  </div>
-                  <div class="summary-card-label">Budget Recommendations</div>
-                </div>
-
-                <div class="summary-card">
-                  <div class="summary-card-icon">
-                    <i class="fas fa-shopping-basket"></i>
-                  </div>
-                  <div class="summary-card-value" id="grocery-history-count">
-                    0
-                  </div>
-                  <div class="summary-card-label">Grocery Analyses</div>
-                </div>
-
-                <div class="summary-card">
-                  <div class="summary-card-icon">
-                    <i class="fas fa-child"></i>
-                  </div>
-                  <div
-                    class="summary-card-value"
-                    id="children-recommendations-count"
-                  >
-                    0
-                  </div>
-                  <div class="summary-card-label">Children Recommendations</div>
-                </div>
-
-                <div class="summary-card">
-                  <div class="summary-card-icon">
-                    <i class="fas fa-calendar-check"></i>
-                  </div>
-                  <div class="summary-card-value" id="days-active">0</div>
-                  <div class="summary-card-label">Days Active</div>
+                <div class="welcome-actions">
+                  <a href="#" id="view-profile-btn" class="btn btn-sm">
+                    <i class="fas fa-user-edit"></i> Edit Profile
+                  </a>
                 </div>
               </div>
 
-              <div class="card">
-                <h3>Quick Actions</h3>
-                <div class="quick-actions">
-                  <a href="index.html" class="btn">
-                    <i class="fas fa-tachometer-alt"></i> Analyze Groceries
-                  </a>
-                  <a href="budget.html" class="btn">
-                    <i class="fas fa-money-bill-wave"></i> Get Budget
-                    Recommendations
-                  </a>
-                  <a href="children.html" class="btn">
-                    <i class="fas fa-child"></i> Children Recommendations
-                  </a>
+              <div class="overview-layout">
+                <div class="overview-main">
+                  <div class="summary-cards-header">
+                    <h3>Your Activity Summary</h3>
+                    <button
+                      id="refresh-summary-btn"
+                      class="btn btn-sm"
+                      title="Refresh summary data"
+                    >
+                      <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                  </div>
+                  <div class="summary-cards">
+                    <div class="summary-card">
+                      <div class="summary-card-icon">
+                        <i class="fas fa-utensils"></i>
+                      </div>
+                      <div class="summary-card-value" id="saved-meals-count">
+                        0
+                      </div>
+                      <div class="summary-card-label">Saved Meals</div>
+                    </div>
+
+                    <div class="summary-card">
+                      <div class="summary-card-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                      </div>
+                      <div class="summary-card-value" id="budget-history-count">
+                        0
+                      </div>
+                      <div class="summary-card-label">Budget Plans</div>
+                    </div>
+
+                    <div class="summary-card">
+                      <div class="summary-card-icon">
+                        <i class="fas fa-shopping-basket"></i>
+                      </div>
+                      <div
+                        class="summary-card-value"
+                        id="grocery-history-count"
+                      >
+                        0
+                      </div>
+                      <div class="summary-card-label">Grocery Analyses</div>
+                    </div>
+
+                    <div class="summary-card">
+                      <div class="summary-card-icon">
+                        <i class="fas fa-child"></i>
+                      </div>
+                      <div
+                        class="summary-card-value"
+                        id="children-recommendations-count"
+                      >
+                        0
+                      </div>
+                      <div class="summary-card-label">Children Guides</div>
+                    </div>
+
+                    <div class="summary-card">
+                      <div class="summary-card-icon">
+                        <i class="fas fa-calendar-check"></i>
+                      </div>
+                      <div class="summary-card-value" id="days-active">0</div>
+                      <div class="summary-card-label">Days Active</div>
+                    </div>
+                  </div>
+
+                  <div class="card nutrition-insights-card">
+                    <div class="card-header">
+                      <h3>
+                        <i class="fas fa-lightbulb"></i> Nutrition Insights
+                      </h3>
+                    </div>
+                    <div class="card-content" id="nutrition-insights">
+                      <div class="insights-placeholder">
+                        <p>
+                          Your nutrition insights will appear here as you use
+                          the system. Start by analyzing your groceries or
+                          creating a budget meal plan!
+                        </p>
+                      </div>
+                      <div
+                        class="insights-content hidden"
+                        id="insights-content"
+                      >
+                        <div class="insight-item">
+                          <div class="insight-icon">
+                            <i class="fas fa-balance-scale"></i>
+                          </div>
+                          <div class="insight-text">
+                            <h4>Balance Score</h4>
+                            <div class="progress-bar">
+                              <div
+                                class="progress"
+                                id="balance-progress"
+                                style="width: 0%"
+                              ></div>
+                            </div>
+                            <p id="balance-text">
+                              Start analyzing your diet to see your balance
+                              score.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="insight-item">
+                          <div class="insight-icon">
+                            <i class="fas fa-chart-pie"></i>
+                          </div>
+                          <div class="insight-text">
+                            <h4>Food Category Distribution</h4>
+                            <div
+                              class="category-distribution"
+                              id="category-distribution"
+                            >
+                              <!-- Category distribution will be loaded here -->
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="insight-item">
+                          <div class="insight-icon">
+                            <i class="fas fa-coins"></i>
+                          </div>
+                          <div class="insight-text">
+                            <h4>Budget Efficiency</h4>
+                            <p id="budget-efficiency-text">
+                              Create budget meal plans to see your efficiency
+                              score.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card quick-actions-card">
+                    <div class="card-header">
+                      <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                    </div>
+                    <div class="card-content">
+                      <div class="quick-actions">
+                        <a href="index.html" class="action-card">
+                          <div class="action-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                          </div>
+                          <div class="action-text">
+                            <h4>Analyze Groceries</h4>
+                            <p>Check if your food selection is balanced</p>
+                          </div>
+                        </a>
+
+                        <a href="budget.html" class="action-card">
+                          <div class="action-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                          </div>
+                          <div class="action-text">
+                            <h4>Budget Meal Plan</h4>
+                            <p>Create nutritious meals within your budget</p>
+                          </div>
+                        </a>
+
+                        <a href="children.html" class="action-card">
+                          <div class="action-icon">
+                            <i class="fas fa-child"></i>
+                          </div>
+                          <div class="action-text">
+                            <h4>Children's Nutrition</h4>
+                            <p>Get age-appropriate feeding recommendations</p>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="overview-sidebar">
+                  <div class="card recent-activity-card">
+                    <div class="card-header">
+                      <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                    </div>
+                    <div class="card-content">
+                      <ul
+                        class="recent-activity-list"
+                        id="recent-activity-list"
+                      >
+                        <li class="activity-placeholder">
+                          No recent activity yet.
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="card-footer">
+                      <a
+                        href="#"
+                        id="view-all-activity-btn"
+                        class="btn btn-sm btn-text"
+                      >
+                        <i class="fas fa-chart-line"></i> View All Analytics
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="card latest-recommendation-card">
+                    <div class="card-header">
+                      <h3><i class="fas fa-star"></i> Latest Recommendation</h3>
+                    </div>
+                    <div class="card-content" id="latest-recommendation">
+                      <div class="recommendation-placeholder">
+                        <p>Your latest recommendation will appear here.</p>
+                        <p>
+                          Start by creating a meal plan or getting children's
+                          nutrition advice!
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -586,7 +1012,14 @@
 
             <!-- Saved Meals Tab -->
             <div id="saved-meals-tab" class="tab-content">
-              <h2>Saved Meals</h2>
+              <div class="tab-header">
+                <h2>Saved Meals</h2>
+                <div class="tab-actions">
+                  <button id="create-sample-meals-btn" class="btn btn-sm">
+                    <i class="fas fa-plus-circle"></i> Create Sample Data
+                  </button>
+                </div>
+              </div>
               <div id="saved-meals-list">
                 <!-- Saved meals will be loaded here -->
                 <p class="empty-state">No saved meals yet.</p>
