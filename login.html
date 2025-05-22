@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Balanced Diet Recommendation System</title>
+    <meta
+      name="description"
+      content="Login to the Balanced Diet Recommendation System for Rwandan Parents"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <style>
+      .auth-page {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--spacing-xl) 0;
+      }
+
+      .auth-container {
+        width: 100%;
+        max-width: 500px;
+      }
+
+      .auth-card {
+        background-color: white;
+        border-radius: var(--border-radius-md);
+        box-shadow: var(--shadow-md);
+        padding: var(--spacing-xl);
+      }
+
+      .auth-header {
+        text-align: center;
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .auth-header h1 {
+        color: var(--primary-color);
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .auth-header p {
+        color: #666;
+      }
+
+      .auth-form {
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .form-footer {
+        text-align: center;
+        margin-top: var(--spacing-lg);
+        padding-top: var(--spacing-md);
+        border-top: 1px solid #eee;
+      }
+
+      .error-message {
+        background-color: #ffebee;
+        color: #c62828;
+        padding: var(--spacing-sm);
+        border-radius: var(--border-radius-sm);
+        margin-bottom: var(--spacing-md);
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container header-container">
+        <div class="logo">
+          <i class="fas fa-utensils"></i> Balanced<span>Diet</span>
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <a href="home.html"
+                ><i class="fas fa-home"></i> <span>Home</span></a
+              >
+            </li>
+            <li>
+              <a href="index.html"
+                ><i class="fas fa-tachometer-alt"></i> <span>Grocery</span></a
+              >
+            </li>
+            <li>
+              <a href="budget.html"
+                ><i class="fas fa-money-bill-wave"></i> <span>Budget</span></a
+              >
+            </li>
+            <li>
+              <a href="children.html" class="active"
+                ><i class="fas fa-child"></i> <span>Children</span></a
+              >
+            </li>
+            <li class="auth-link guest-only">
+              <a href="login.html" class="active"
+                ><i class="fas fa-sign-in-alt"></i> <span>Login</span></a
+              >
+            </li>
+            <li class="auth-link auth-dependent hidden">
+              <a href="dashboard.html"
+                ><i class="fas fa-user-circle"></i> <span>Dashboard</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <div class="container">
+        <section class="auth-page">
+          <div class="auth-container">
+            <div class="auth-card">
+              <div class="auth-header">
+                <h1>Login</h1>
+                <p>Welcome back! Please login to access your account.</p>
+              </div>
+
+              <div id="login-error" class="error-message hidden"></div>
+
+              <form id="login-form" class="auth-form">
+                <div class="form-group">
+                  <label for="login-email">Email</label>
+                  <input
+                    type="email"
+                    id="login-email"
+                    placeholder="Enter your email"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="login-password">Password</label>
+                  <input
+                    type="password"
+                    id="login-password"
+                    placeholder="Enter your password"
+                    required
+                  />
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%">
+                  <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+              </form>
+
+              <div class="form-footer">
+                <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+                <p>Or <a href="index.html">continue as guest</a></p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>&copy; 2023 Balanced Diet Recommendation System</p>
+        <p>Designed for Rwandan Parents</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

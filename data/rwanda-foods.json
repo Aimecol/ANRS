@@ -1,0 +1,241 @@
+{
+  "foods": [
+    {
+      "id": 1,
+      "name": {
+        "en": "Beans",
+        "rw": "Ibishyimbo"
+      },
+      "category": "proteins",
+      "price": 1000,
+      "priceUnit": "kg",
+      "benefits": ["Body building", "Blood formation", "Energy source"],
+      "image": "beans.jpg",
+      "quantityUnits": ["kg", "cups"]
+    },
+    {
+      "id": 2,
+      "name": {
+        "en": "Sweet Potatoes",
+        "rw": "Ibijumba"
+      },
+      "category": "carbohydrates",
+      "price": 500,
+      "priceUnit": "kg",
+      "benefits": ["Energy source", "Vitamin A", "Fiber"],
+      "image": "sweet-potatoes.jpg",
+      "quantityUnits": ["kg", "pieces"]
+    },
+    {
+      "id": 3,
+      "name": {
+        "en": "Cassava",
+        "rw": "Imyumbati"
+      },
+      "category": "carbohydrates",
+      "price": 400,
+      "priceUnit": "kg",
+      "benefits": ["Energy source", "Fiber"],
+      "image": "cassava.jpg",
+      "quantityUnits": ["kg", "pieces"]
+    },
+    {
+      "id": 4,
+      "name": {
+        "en": "Beef",
+        "rw": "Inyama y'inka"
+      },
+      "category": "proteins",
+      "price": 3500,
+      "priceUnit": "kg",
+      "benefits": ["Body building", "Iron source", "Vitamin B12"],
+      "image": "beef.jpg",
+      "quantityUnits": ["kg", "pieces"]
+    },
+    {
+      "id": 5,
+      "name": {
+        "en": "Milk",
+        "rw": "Amata"
+      },
+      "category": "proteins",
+      "price": 700,
+      "priceUnit": "liter",
+      "benefits": ["Calcium source", "Protein", "Vitamin D"],
+      "image": "milk.jpg",
+      "quantityUnits": ["liter", "cups"]
+    },
+    {
+      "id": 6,
+      "name": {
+        "en": "Cassava Leaves",
+        "rw": "Isombe"
+      },
+      "category": "vitamins",
+      "price": 300,
+      "priceUnit": "bunch",
+      "benefits": ["Vitamin A", "Iron", "Fiber"],
+      "image": "cassava-leaves.jpg",
+      "quantityUnits": ["bunch", "cups"]
+    },
+    {
+      "id": 7,
+      "name": {
+        "en": "Irish Potatoes",
+        "rw": "Ibirayi"
+      },
+      "category": "carbohydrates",
+      "price": 600,
+      "priceUnit": "kg",
+      "benefits": ["Energy source", "Vitamin C", "Potassium"],
+      "image": "irish-potatoes.jpg",
+      "quantityUnits": ["kg", "pieces"]
+    },
+    {
+      "id": 8,
+      "name": {
+        "en": "Maize Flour",
+        "rw": "Ubugari"
+      },
+      "category": "carbohydrates",
+      "price": 800,
+      "priceUnit": "kg",
+      "benefits": ["Energy source", "Fiber"],
+      "image": "maize-flour.jpg",
+      "quantityUnits": ["kg", "cups"]
+    },
+    {
+      "id": 9,
+      "name": {
+        "en": "Carrots",
+        "rw": "Karoti"
+      },
+      "category": "vitamins",
+      "price": 700,
+      "priceUnit": "kg",
+      "benefits": ["Vitamin A", "Vision health", "Immune support"],
+      "image": "carrots.jpg",
+      "quantityUnits": ["kg", "pieces"]
+    },
+    {
+      "id": 10,
+      "name": {
+        "en": "Spinach",
+        "rw": "Imbwija"
+      },
+      "category": "vitamins",
+      "price": 400,
+      "priceUnit": "bunch",
+      "benefits": ["Iron", "Vitamin K", "Antioxidants"],
+      "image": "spinach.jpg",
+      "quantityUnits": ["bunch", "cups"]
+    },
+    {
+      "id": 11,
+      "name": {
+        "en": "Cow Butter",
+        "rw": "Amavuta y'inka"
+      },
+      "category": "fats",
+      "price": 2500,
+      "priceUnit": "kg",
+      "benefits": ["Energy source", "Vitamin A", "Vitamin D"],
+      "image": "butter.jpg",
+      "quantityUnits": ["kg", "tablespoons"]
+    },
+    {
+      "id": 12,
+      "name": {
+        "en": "Avocado",
+        "rw": "Avoka"
+      },
+      "category": "fats",
+      "price": 200,
+      "priceUnit": "piece",
+      "benefits": ["Healthy fats", "Vitamin E", "Potassium"],
+      "image": "avocado.jpg",
+      "quantityUnits": ["pieces"]
+    },
+    {
+      "id": 13,
+      "name": {
+        "en": "Chicken",
+        "rw": "Inkoko"
+      },
+      "category": "proteins",
+      "price": 3000,
+      "priceUnit": "kg",
+      "benefits": ["Lean protein", "Vitamin B6", "Selenium"],
+      "image": "chicken.jpg",
+      "quantityUnits": ["kg", "pieces"]
+    },
+    {
+      "id": 14,
+      "name": {
+        "en": "Rice",
+        "rw": "Umuceri"
+      },
+      "category": "carbohydrates",
+      "price": 1200,
+      "priceUnit": "kg",
+      "benefits": ["Energy source", "Easy to digest"],
+      "image": "rice.jpg",
+      "quantityUnits": ["kg", "cups"]
+    },
+    {
+      "id": 15,
+      "name": {
+        "en": "Tomatoes",
+        "rw": "Inyanya"
+      },
+      "category": "vitamins",
+      "price": 800,
+      "priceUnit": "kg",
+      "benefits": ["Vitamin C", "Antioxidants", "Lycopene"],
+      "image": "tomatoes.jpg",
+      "quantityUnits": ["kg", "pieces"]
+    }
+  ],
+  "categories": [
+    {
+      "id": "carbohydrates",
+      "name": {
+        "en": "Carbohydrates",
+        "rw": "Ibitera imbaraga"
+      },
+      "icon": "bread-slice",
+      "color": "#FFA500",
+      "description": "Energy-giving foods"
+    },
+    {
+      "id": "proteins",
+      "name": {
+        "en": "Proteins",
+        "rw": "Ibubaka umubiri"
+      },
+      "icon": "drumstick-bite",
+      "color": "#FF6347",
+      "description": "Body-building foods"
+    },
+    {
+      "id": "vitamins",
+      "name": {
+        "en": "Vitamins & Minerals",
+        "rw": "Vitamini n'imyunyu ngombwa"
+      },
+      "icon": "carrot",
+      "color": "#32CD32",
+      "description": "Protective foods"
+    },
+    {
+      "id": "fats",
+      "name": {
+        "en": "Fats & Oils",
+        "rw": "Amavuta"
+      },
+      "icon": "oil-can",
+      "color": "#FFD700",
+      "description": "Energy-concentrated foods"
+    }
+  ]
+}

@@ -1,0 +1,415 @@
+/*
+* Balanced Diet Recommendation System for Rwandan Parents
+* Main Stylesheet
+*/
+
+/* ===== GLOBAL STYLES ===== */
+:root {
+  /* Main color palette */
+  --primary-color: #2e7d32; /* Green - representing health and nutrition */
+  --secondary-color: #ff6f00; /* Orange - representing energy */
+  --accent-color: #1976d2; /* Blue - representing water and hydration */
+  --light-color: #f5f5f5;
+  --dark-color: #212121;
+
+  /* Food category colors */
+  --carbs-color: #ffa500; /* Orange for carbohydrates */
+  --protein-color: #ff6347; /* Red for proteins */
+  --vitamin-color: #32cd32; /* Green for vitamins */
+  --fat-color: #ffd700; /* Yellow for fats */
+
+  /* Font sizes */
+  --font-small: 0.875rem;
+  --font-medium: 1rem;
+  --font-large: 1.25rem;
+  --font-xlarge: 1.5rem;
+  --font-xxlarge: 2rem;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Border radius */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 16px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-md: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--dark-color);
+  background-color: var(--light-color);
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: var(--accent-color);
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* ===== HEADER ===== */
+header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: var(--spacing-md) 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: var(--font-xlarge);
+  font-weight: bold;
+}
+
+.logo span {
+  color: var(--secondary-color);
+}
+
+nav ul {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+nav ul li {
+  margin-left: var(--spacing-md);
+}
+
+nav ul li a {
+  color: white;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: var(--secondary-color);
+}
+
+.auth-link a {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+}
+
+.auth-link a:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ===== MAIN CONTENT ===== */
+main {
+  padding: var(--spacing-xl) 0;
+}
+
+.section-title {
+  font-size: var(--font-xxlarge);
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+/* ===== CARDS ===== */
+.info-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.category-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.card {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===== FORMS ===== */
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-medium);
+}
+
+.btn {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-size: var(--font-medium);
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #1b5e20; /* Darker green */
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+}
+
+.btn-secondary:hover {
+  background-color: #e65100; /* Darker orange */
+}
+
+.btn-large {
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-large);
+  font-weight: 500;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl) .8rem;
+  margin-bottom: var(--spacing-xl);
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0.7)
+    ),
+    url("../assets/images/hero-bg.jpg") center/cover no-repeat;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.hero-content {
+  max-width: 800px;
+  text-align: center;
+}
+
+.hero-text {
+  font-size: var(--font-large);
+  margin-bottom: var(--spacing-lg);
+  color: var(--dark-color);
+}
+
+.hero-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.feature i {
+  font-size: var(--font-xlarge);
+  color: var(--primary-color);
+  margin-right: var(--spacing-sm);
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.guest-access-note {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-medium);
+}
+
+.guest-access-note i {
+  color: var(--accent-color);
+}
+
+/* ===== FOOD CATEGORIES ===== */
+.category-badge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-small);
+  font-weight: 500;
+  margin-right: var(--spacing-xs);
+}
+
+.category-carbohydrates {
+  background-color: var(--carbs-color);
+  color: white;
+}
+
+.category-proteins {
+  background-color: var(--protein-color);
+  color: white;
+}
+
+.category-vitamins {
+  background-color: var(--vitamin-color);
+  color: white;
+}
+
+.category-fats {
+  background-color: var(--fat-color);
+  color: black;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  header {
+    padding: var(--spacing-sm);
+  }
+
+  .header-container {
+    flex-direction: column;
+  }
+
+  nav ul {
+    gap: var(--spacing-sm);
+  }
+
+  nav ul {
+    margin-top: var(--spacing-md);
+  }
+
+  nav a span {
+    display: none;
+  }
+
+  .section-title {
+    font-size: var(--font-xlarge);
+  }
+
+  .hero-cta a {
+    width: 100%;
+    text-align: center;
+    display: block;
+    padding: var(--spacing-sm);
+  }
+
+  .hero-cta span {
+    display: none;
+  }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background-color: var(--primary-color);
+  color: white;
+  padding: var(--spacing-lg) 0;
+  text-align: center;
+}
+
+footer p {
+  margin-bottom: var(--spacing-sm);
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.social-icons a {
+  color: white;
+  font-size: var(--font-large);
+}
+
+.social-icons a:hover {
+  color: var(--secondary-color);
+}

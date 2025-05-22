@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Budget Recommendations | Balanced Diet Recommendation System</title>
+    <meta
+      name="description"
+      content="Get balanced meal recommendations within your budget"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <style>
+      /* Additional styles specific to budget page */
+      .budget-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+      }
+
+      @media (min-width: 768px) {
+        .budget-container {
+          grid-template-columns: 1fr 2fr;
+        }
+      }
+
+      .budget-form {
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .budget-input {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+      }
+
+      .budget-input input {
+        flex: 1;
+      }
+
+      .currency-label {
+        font-weight: bold;
+        color: var(--primary-color);
+      }
+
+      .meal-option {
+        background-color: white;
+        border-radius: var(--border-radius-md);
+        box-shadow: var(--shadow-sm);
+        padding: var(--spacing-lg);
+        margin-bottom: var(--spacing-lg);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .meal-option:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .meal-details {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+        margin: var(--spacing-md) 0;
+      }
+
+      @media (min-width: 768px) {
+        .meal-details {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .meal-ingredients ul {
+        margin-top: var(--spacing-sm);
+      }
+
+      .meal-ingredients li {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: var(--spacing-xs);
+        padding-bottom: var(--spacing-xs);
+        border-bottom: 1px dashed #eee;
+      }
+
+      .nutrition-categories {
+        margin-top: var(--spacing-sm);
+      }
+
+      .nutrition-category {
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .nutrition-bar {
+        height: 10px;
+        background-color: #eee;
+        border-radius: 5px;
+        margin-top: var(--spacing-xs);
+        overflow: hidden;
+      }
+
+      .nutrition-fill {
+        height: 100%;
+        border-radius: 5px;
+      }
+
+      .meal-summary {
+        display: flex;
+        justify-content: space-between;
+        background-color: #f5f5f5;
+        padding: var(--spacing-sm);
+        border-radius: var(--border-radius-sm);
+        margin-bottom: var(--spacing-md);
+      }
+
+      .meal-cost {
+        color: var(--primary-color);
+      }
+
+      .meal-savings {
+        color: var(--secondary-color);
+      }
+
+      .meal-preparation {
+        background-color: #e8f5e9;
+        padding: var(--spacing-sm);
+        border-radius: var(--border-radius-sm);
+        border-left: 4px solid var(--primary-color);
+      }
+
+      .budget-history-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--spacing-sm) 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .btn-use-budget {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: var(--border-radius-sm);
+        cursor: pointer;
+      }
+
+      .error-card {
+        border-left: 4px solid #f44336;
+      }
+
+      .error-card .card-header {
+        color: #f44336;
+      }
+
+      #error-container,
+      #success-container {
+        padding: var(--spacing-sm);
+        border-radius: var(--border-radius-sm);
+        margin-bottom: var(--spacing-md);
+      }
+
+      #error-container {
+        background-color: #ffebee;
+        color: #c62828;
+      }
+
+      #success-container {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .user-welcome {
+        background-color: var(--light-color);
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-md);
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .user-welcome h2 {
+        margin-bottom: var(--spacing-sm);
+        color: var(--primary-color);
+        font-weight: bold;
+      }
+
+      .user-welcome p {
+        color: #666;
+        margin-bottom: 0;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container header-container">
+        <div class="logo">
+          <i class="fas fa-utensils"></i> Balanced<span>Diet</span>
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <a href="home.html"
+                ><i class="fas fa-home"></i> <span>Home</span></a
+              >
+            </li>
+            <li>
+              <a href="index.html"
+                ><i class="fas fa-tachometer-alt"></i> <span>Grocery</span></a
+              >
+            </li>
+            <li>
+              <a href="budget.html" class="active"
+                ><i class="fas fa-money-bill-wave"></i> <span>Budget</span></a
+              >
+            </li>
+            <li>
+              <a href="children.html"
+                ><i class="fas fa-child"></i> <span>Children</span></a
+              >
+            </li>
+            <li class="auth-link guest-only">
+              <a href="login.html"
+                ><i class="fas fa-sign-in-alt"></i> <span>Login</span></a
+              >
+            </li>
+            <li class="auth-link auth-dependent hidden">
+              <a href="dashboard.html"
+                ><i class="fas fa-user-circle"></i> <span>Dashboard</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <div class="container">
+        <h1 class="section-title">Budget-Based Meal Recommendations</h1>
+
+        <!-- User Welcome Section (Only visible when logged in) -->
+        <div class="user-welcome auth-dependent hidden">
+          <h2>Welcome, <span class="user-name">User</span>!</h2>
+          <p>Enter your budget to get balanced meal recommendations.</p>
+        </div>
+
+        <!-- Guest Welcome (Only visible for guests) -->
+        <div class="user-welcome guest-only">
+          <h2>Welcome, Guest!</h2>
+          <p>
+            Enter your budget to get balanced meal recommendations.
+            <a href="login.html">Login or register</a> to save your results.
+          </p>
+        </div>
+
+        <!-- Error and Success Messages -->
+        <div id="error-container" class="hidden"></div>
+        <div id="success-container" class="hidden"></div>
+
+        <div class="budget-container">
+          <div class="budget-input-container">
+            <div class="card">
+              <h2>Enter Your Budget</h2>
+              <p>
+                We'll recommend balanced meals within your budget using local
+                Rwandan food prices.
+              </p>
+
+              <form id="budget-form" class="budget-form">
+                <div class="form-group">
+                  <label for="budget-amount">Budget Amount</label>
+                  <div class="budget-input">
+                    <input
+                      type="number"
+                      id="budget-amount"
+                      min="500"
+                      step="100"
+                      placeholder="Enter amount"
+                      required
+                    />
+                    <span class="currency-label">RWF</span>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn">
+                  <i class="fas fa-search"></i> Get Recommendations
+                </button>
+              </form>
+            </div>
+
+            <!-- Budget History (Only visible when logged in) -->
+            <div id="budget-history" class="auth-dependent hidden"></div>
+          </div>
+
+          <div class="budget-results-container">
+            <div id="budget-results">
+              <!-- Budget recommendations will be displayed here -->
+              <div class="card intro-card">
+                <h3>How It Works</h3>
+                <ol>
+                  <li>Enter your budget in Rwandan Francs (RWF)</li>
+                  <li>Our system will analyze local food prices</li>
+                  <li>
+                    You'll receive balanced meal recommendations within your
+                    budget
+                  </li>
+                  <li>
+                    Each recommendation includes:
+                    <ul>
+                      <li>List of ingredients with quantities</li>
+                      <li>Nutritional breakdown</li>
+                      <li>Total cost and savings</li>
+                      <li>Preparation tips</li>
+                    </ul>
+                  </li>
+                </ol>
+                <p class="tip">
+                  <i class="fas fa-lightbulb"></i> <strong>Tip:</strong> For a
+                  family of four, a budget of at least 2000 RWF is recommended
+                  for a balanced meal.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>&copy; 2023 Balanced Diet Recommendation System</p>
+        <p>Designed for Rwandan Parents</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/budget-recommendations.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+  </body>
+</html>

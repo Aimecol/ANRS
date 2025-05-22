@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | Balanced Diet Recommendation System</title>
+    <meta
+      name="description"
+      content="Analyze your groceries for a balanced diet"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <style>
+      /* Additional styles specific to dashboard */
+      .dashboard-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+      }
+
+      @media (min-width: 768px) {
+        .dashboard-container {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .food-selection {
+        margin-bottom: var(--spacing-lg);
+      }
+
+      /* Category sections removed - all foods displayed in a single list */
+
+      .food-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-md);
+        max-height: 500px;
+        overflow-y: auto;
+        padding: var(--spacing-sm);
+        background-color: #f9f9f9;
+        border-radius: var(--border-radius-md);
+      }
+
+      .food-item {
+        background-color: white;
+        padding: var(--spacing-sm);
+        border-radius: var(--border-radius-sm);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .food-checkbox {
+        display: flex;
+        align-items: center;
+      }
+
+      .food-checkbox input[type="checkbox"] {
+        width: auto;
+        margin-right: var(--spacing-sm);
+      }
+
+      .food-quantity {
+        margin-top: var(--spacing-sm);
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+      }
+
+      .food-quantity input {
+        width: 60px;
+      }
+
+      .food-quantity select {
+        width: 80px;
+      }
+
+      .selected-foods-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .selected-foods-table th,
+      .selected-foods-table td {
+        padding: var(--spacing-sm);
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .btn-remove {
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+      }
+
+      .analysis-card {
+        margin-top: var(--spacing-lg);
+      }
+
+      .analysis-header {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+      }
+
+      .analysis-header.balanced {
+        color: #4caf50;
+      }
+
+      .analysis-header.unbalanced {
+        color: #f44336;
+      }
+
+      .analysis-header i {
+        font-size: 2rem;
+      }
+
+      .category-list {
+        margin-top: var(--spacing-sm);
+      }
+
+      .category-list li {
+        display: flex;
+        align-items: center;
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .category-count {
+        margin-left: var(--spacing-sm);
+      }
+
+      .benefits-list {
+        margin-top: var(--spacing-sm);
+      }
+
+      .benefits-list li {
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .meal-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-md);
+      }
+
+      .meal-card {
+        background-color: #f9f9f9;
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-sm);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .meal-card h5 {
+        margin-bottom: var(--spacing-sm);
+        color: var(--primary-color);
+      }
+
+      .food-suggestions {
+        margin-top: var(--spacing-xs);
+        margin-left: var(--spacing-md);
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .user-welcome {
+        background-color: var(--light-color);
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-md);
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .user-welcome h2 {
+        margin-bottom: var(--spacing-sm);
+        color: var(--primary-color);
+        font-weight: bold;
+      }
+
+      .user-welcome p {
+        color: #666;
+        margin-bottom: 0;
+        line-height: 1.5;
+      }
+
+      .saved-groceries-card {
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .saved-foods-list {
+        margin-top: var(--spacing-sm);
+      }
+
+      .saved-foods-list li {
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .saved-date {
+        color: #666;
+        font-style: italic;
+        margin-bottom: var(--spacing-sm);
+      }
+
+      #error-container,
+      #success-container {
+        padding: var(--spacing-sm);
+        border-radius: var(--border-radius-sm);
+        margin-bottom: var(--spacing-md);
+      }
+
+      #error-container {
+        background-color: #ffebee;
+        color: #c62828;
+      }
+
+      #success-container {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+      }
+
+      /* Search Bar Styles */
+      .search-container {
+        margin-bottom: var(--spacing-md);
+        background-color: #f9f9f9;
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-md);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .search-input-group {
+        position: relative;
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .search-icon {
+        position: absolute;
+        left: var(--spacing-sm);
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm)
+          calc(var(--spacing-sm) * 3);
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius-sm);
+        font-size: var(--font-medium);
+      }
+
+      .search-input:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+      }
+
+      .clear-search-btn {
+        position: absolute;
+        right: var(--spacing-sm);
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        padding: 0;
+        font-size: var(--font-medium);
+      }
+
+      .clear-search-btn:hover {
+        color: var(--primary-color);
+      }
+
+      .search-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-sm);
+      }
+
+      .search-filters label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .search-filters label input[type="checkbox"] {
+        margin-right: var(--spacing-xs);
+        width: auto;
+      }
+
+      /* Highlight search results */
+      .food-item.search-match {
+        border: 2px solid var(--primary-color);
+        animation: pulse 1s;
+      }
+
+      .food-item.search-hidden {
+        display: none;
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(46, 125, 50, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(46, 125, 50, 0);
+        }
+      }
+
+      .no-results {
+        padding: var(--spacing-md);
+        background-color: #f5f5f5;
+        border-radius: var(--border-radius-sm);
+        text-align: center;
+        margin-top: var(--spacing-md);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container header-container">
+        <div class="logo">
+          <i class="fas fa-utensils"></i> Balanced<span>Diet</span>
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <a href="home.html"
+                ><i class="fas fa-home"></i> <span>Home</span></a
+              >
+            </li>
+            <li>
+              <a href="index.html" class="active"
+                ><i class="fas fa-tachometer-alt"></i> <span>Grocery</span></a
+              >
+            </li>
+            <li>
+              <a href="budget.html"
+                ><i class="fas fa-money-bill-wave"></i> <span>Budget</span></a
+              >
+            </li>
+            <li>
+              <a href="children.html"
+                ><i class="fas fa-child"></i> <span>Children</span></a
+              >
+            </li>
+            <li class="auth-link guest-only">
+              <a href="login.html"
+                ><i class="fas fa-sign-in-alt"></i> <span>Login</span></a
+              >
+            </li>
+            <li class="auth-link auth-dependent hidden">
+              <a href="dashboard.html"
+                ><i class="fas fa-user-circle"></i> <span>Dashboard</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <div class="container">
+        <h1 class="section-title">Grocery Analysis</h1>
+
+        <!-- User Welcome Section (Only visible when logged in) -->
+        <div class="user-welcome auth-dependent hidden">
+          <h2>Welcome, <span class="user-name">User</span>!</h2>
+          <p>Select your groceries below to analyze your diet.</p>
+        </div>
+
+        <!-- Guest Welcome (Only visible for guests) -->
+        <div class="user-welcome guest-only">
+          <h2>Welcome, Guest!</h2>
+          <p>
+            Select your groceries below to analyze your diet.
+            <a href="login.html">Login or register</a> to save your results.
+          </p>
+        </div>
+
+        <!-- Error and Success Messages -->
+        <div id="error-container" class="hidden"></div>
+        <div id="success-container" class="hidden"></div>
+
+        <!-- Saved Groceries (Only visible when logged in) -->
+        <div id="saved-groceries" class="auth-dependent hidden"></div>
+
+        <div class="dashboard-container">
+          <div class="grocery-selection-container">
+            <div class="card">
+              <h2>Select Your Groceries</h2>
+              <p>Check the items you currently have at home:</p>
+
+              <!-- Search Bar -->
+              <div class="search-container">
+                <div class="search-input-group">
+                  <i class="fas fa-search search-icon"></i>
+                  <input
+                    type="text"
+                    id="food-search"
+                    placeholder="Search for foods (e.g., Beans, Rice, Milk)..."
+                    class="search-input"
+                  />
+                  <button
+                    type="button"
+                    id="clear-search"
+                    class="clear-search-btn hidden"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+                <div class="search-filters">
+                  <label>
+                    <input type="checkbox" id="filter-carbohydrates" />
+                    <span class="category-badge category-carbohydrates"
+                      >Carbohydrates</span
+                    >
+                  </label>
+                  <label>
+                    <input type="checkbox" id="filter-proteins" />
+                    <span class="category-badge category-proteins"
+                      >Proteins</span
+                    >
+                  </label>
+                  <label>
+                    <input type="checkbox" id="filter-vitamins" />
+                    <span class="category-badge category-vitamins"
+                      >Vitamins</span
+                    >
+                  </label>
+                  <label>
+                    <input type="checkbox" id="filter-fats" />
+                    <span class="category-badge category-fats">Fats</span>
+                  </label>
+                </div>
+              </div>
+
+              <form id="grocery-form">
+                <div id="food-selection" class="food-selection">
+                  <!-- Food items will be populated by JavaScript -->
+                  <!-- <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i> Loading food items...
+                  </div> -->
+                </div>
+
+                <button type="submit" class="btn" id="analyze-diet">
+                  <i class="fas fa-chart-pie"></i> Analyze Diet
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="results-container">
+            <div class="card">
+              <h2>Selected Foods</h2>
+              <div id="selected-foods">
+                <p>No foods selected yet.</p>
+              </div>
+            </div>
+
+            <div id="analysis-results">
+              <!-- Analysis results will be displayed here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>&copy; 2023 Balanced Diet Recommendation System</p>
+        <p>Designed for Rwandan Parents</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/diet-analysis.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/search.js"></script>
+  </body>
+</html>

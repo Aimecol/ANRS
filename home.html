@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Balanced Diet Recommendation System | Rwanda</title>
+    <meta
+      name="description"
+      content="A web-based balanced diet recommendation system for Rwandan parents"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container header-container">
+        <div class="logo">
+          <i class="fas fa-utensils"></i> Balanced<span>Diet</span>
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <a href="home.html" class="active"
+                ><i class="fas fa-home"></i> <span>Home</span></a
+              >
+            </li>
+            <li>
+              <a href="index.html"
+                ><i class="fas fa-tachometer-alt"></i> <span>Grocery</span></a
+              >
+            </li>
+            <li>
+              <a href="budget.html"
+                ><i class="fas fa-money-bill-wave"></i> <span>Budget</span></a
+              >
+            </li>
+            <li>
+              <a href="children.html"
+                ><i class="fas fa-child"></i> <span>Children</span></a
+              >
+            </li>
+            <li class="auth-link guest-only">
+              <a href="login.html"
+                ><i class="fas fa-sign-in-alt"></i> <span>Login</span></a
+              >
+            </li>
+            <li class="auth-link auth-dependent hidden">
+              <a href="dashboard.html"
+                ><i class="fas fa-user-circle"></i> <span>Dashboard</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <div class="container">
+        <section class="hero">
+          <div class="hero-content">
+            <h1 class="section-title">Balanced Diet for Rwandan Children</h1>
+            <p class="hero-text">
+              Discover balanced meal options using the groceries you already
+              have at home. Get recommendations for affordable, nutritious meals
+              that support your children's growth.
+            </p>
+            <div class="hero-features">
+              <div class="feature">
+                <i class="fas fa-check-circle"></i>
+                <span>Analyze your groceries for balanced nutrition</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-money-bill-wave"></i>
+                <span
+                  >Get affordable meal recommendations within your budget</span
+                >
+              </div>
+              <div class="feature">
+                <i class="fas fa-mobile-alt"></i>
+                <span>Works offline on your device</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-utensils"></i>
+                <span>Tailored for Rwandan foods and local ingredients</span>
+              </div>
+            </div>
+
+            <div class="hero-cta">
+              <a href="index.html" class="btn btn-primary btn-large">
+                <i class="fas fa-chart-pie"></i> Start Analyzing
+                <span>Your Diet</span>
+              </a>
+              <a href="budget.html" class="btn btn-secondary btn-large">
+                <i class="fas fa-money-bill-wave"></i> Get Budget
+                <span>Recommendations</span>
+              </a>
+            </div>
+
+            <div class="guest-access-note">
+              <p>
+                <i class="fas fa-info-circle"></i>
+                You can use the system as a guest or
+                <a href="login.html">login</a> /
+                <a href="signup.html">sign up</a>
+                to save your preferences.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="info-section">
+          <h2 class="section-title">Why Balanced Diet Matters</h2>
+          <div class="info-cards">
+            <div class="card info-card">
+              <div class="card-icon">
+                <i class="fas fa-child"></i>
+              </div>
+              <h3>Growth & Development</h3>
+              <p>
+                A balanced diet provides essential nutrients that support your
+                child's physical and mental development.
+              </p>
+            </div>
+
+            <div class="card info-card">
+              <div class="card-icon">
+                <i class="fas fa-brain"></i>
+              </div>
+              <h3>Cognitive Function</h3>
+              <p>
+                Proper nutrition improves concentration, memory, and overall
+                brain function in children.
+              </p>
+            </div>
+
+            <div class="card info-card">
+              <div class="card-icon">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <h3>Immune System</h3>
+              <p>
+                A balanced diet strengthens your child's immune system, helping
+                them fight off illnesses.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="categories-section">
+          <h2 class="section-title">Essential Food Categories</h2>
+          <div class="category-cards">
+            <div
+              class="card category-card"
+              style="border-top: 4px solid var(--carbs-color)"
+            >
+              <div class="category-icon" style="color: var(--carbs-color)">
+                <i class="fas fa-bread-slice"></i>
+              </div>
+              <h3>Carbohydrates</h3>
+              <p>Energy-giving foods like Ubugari, Ibirayi, and Umuceri.</p>
+              <span class="category-badge category-carbohydrates"
+                >Ibitera imbaraga</span
+              >
+            </div>
+
+            <div
+              class="card category-card"
+              style="border-top: 4px solid var(--protein-color)"
+            >
+              <div class="category-icon" style="color: var(--protein-color)">
+                <i class="fas fa-drumstick-bite"></i>
+              </div>
+              <h3>Proteins</h3>
+              <p>Body-building foods like Ibishyimbo, Inyama, and Amata.</p>
+              <span class="category-badge category-proteins"
+                >Ibubaka umubiri</span
+              >
+            </div>
+
+            <div
+              class="card category-card"
+              style="border-top: 4px solid var(--vitamin-color)"
+            >
+              <div class="category-icon" style="color: var(--vitamin-color)">
+                <i class="fas fa-carrot"></i>
+              </div>
+              <h3>Vitamins & Minerals</h3>
+              <p>Protective foods like Isombe, Imbwija, and Karoti.</p>
+              <span class="category-badge category-vitamins"
+                >Vitamini n'imyunyu ngombwa</span
+              >
+            </div>
+
+            <div
+              class="card category-card"
+              style="border-top: 4px solid var(--fat-color)"
+            >
+              <div class="category-icon" style="color: var(--fat-color)">
+                <i class="fas fa-oil-can"></i>
+              </div>
+              <h3>Fats & Oils</h3>
+              <p>Energy-concentrated foods like Amavuta y'inka and Avoka.</p>
+              <span class="category-badge category-fats">Amavuta</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>&copy; 2023 Balanced Diet Recommendation System</p>
+        <p>Designed for Rwandan Parents</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
