@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ANRS</title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/icons/favicon.ico">
+</head>
+<body>
+    <div class="admin-dashboard">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="admin-sidebar-header">
+                <div class="admin-sidebar-logo">ANRS Admin</div>
+                <div class="admin-sidebar-subtitle">Dashboard</div>
+            </div>
+            
+            <nav class="admin-sidebar-nav">
+                <div class="admin-nav-item">
+                    <a href="dashboard.html" class="admin-nav-link active">
+                        <i class="fas fa-tachometer-alt admin-nav-icon"></i>
+                        <span class="admin-nav-text">Dashboard</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="users.html" class="admin-nav-link">
+                        <i class="fas fa-users admin-nav-icon"></i>
+                        <span class="admin-nav-text">Users</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="foods.html" class="admin-nav-link">
+                        <i class="fas fa-apple-alt admin-nav-icon"></i>
+                        <span class="admin-nav-text">Foods</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="meals.html" class="admin-nav-link">
+                        <i class="fas fa-utensils admin-nav-icon"></i>
+                        <span class="admin-nav-text">Meals</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="analytics.html" class="admin-nav-link">
+                        <i class="fas fa-chart-bar admin-nav-icon"></i>
+                        <span class="admin-nav-text">Analytics</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="settings.html" class="admin-nav-link">
+                        <i class="fas fa-cog admin-nav-icon"></i>
+                        <span class="admin-nav-text">Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main-content" id="adminMainContent">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="admin-header-left">
+                    <button class="admin-sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="admin-page-title">Dashboard Overview</h1>
+                </div>
+                <div class="admin-header-right">
+                    <div class="admin-user-menu">
+                        <div class="admin-user-avatar" id="userAvatar" title="Admin Menu">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="admin-user-dropdown" id="userDropdown">
+                            <a href="#" class="admin-logout-btn">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="admin-content">
+                <!-- Stats Cards -->
+                <div class="admin-stats-grid">
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="admin-stat-content">
+                            <div class="admin-stat-number" id="totalUsers">-</div>
+                            <div class="admin-stat-label">Total Users</div>
+                            <div class="admin-stat-change positive" id="usersChange">+0%</div>
+                        </div>
+                    </div>
+
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="admin-stat-content">
+                            <div class="admin-stat-number" id="totalMeals">-</div>
+                            <div class="admin-stat-label">Saved Meals</div>
+                            <div class="admin-stat-change positive" id="mealsChange">+0%</div>
+                        </div>
+                    </div>
+
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                        <div class="admin-stat-content">
+                            <div class="admin-stat-number" id="totalFoods">-</div>
+                            <div class="admin-stat-label">Food Items</div>
+                            <div class="admin-stat-change neutral" id="foodsChange">0%</div>
+                        </div>
+                    </div>
+
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="admin-stat-content">
+                            <div class="admin-stat-number" id="activeUsers">-</div>
+                            <div class="admin-stat-label">Active Users</div>
+                            <div class="admin-stat-change positive" id="activeUsersChange">+0%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts and Recent Activity -->
+                <div class="admin-dashboard-grid">
+                    <!-- Recent Users -->
+                    <div class="admin-dashboard-card">
+                        <div class="admin-card-header">
+                            <h3><i class="fas fa-user-plus"></i> Recent Users</h3>
+                            <a href="users.html" class="admin-btn admin-btn-sm">View All</a>
+                        </div>
+                        <div class="admin-card-content">
+                            <div id="recentUsers" class="admin-recent-list">
+                                <div class="admin-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Meals -->
+                    <div class="admin-dashboard-card">
+                        <div class="admin-card-header">
+                            <h3><i class="fas fa-utensils"></i> Recent Meals</h3>
+                            <a href="meals.html" class="admin-btn admin-btn-sm">View All</a>
+                        </div>
+                        <div class="admin-card-content">
+                            <div id="recentMeals" class="admin-recent-list">
+                                <div class="admin-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Health -->
+                    <div class="admin-dashboard-card">
+                        <div class="admin-card-header">
+                            <h3><i class="fas fa-heartbeat"></i> System Health</h3>
+                            <button class="admin-btn admin-btn-sm" onclick="refreshSystemHealth()">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                        </div>
+                        <div class="admin-card-content">
+                            <div id="systemHealth" class="admin-health-indicators">
+                                <div class="admin-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="admin-dashboard-card">
+                        <div class="admin-card-header">
+                            <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                        </div>
+                        <div class="admin-card-content">
+                            <div class="admin-quick-actions">
+                                <a href="foods.html" class="admin-quick-action">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Add Food Item</span>
+                                </a>
+                                <a href="users.html" class="admin-quick-action">
+                                    <i class="fas fa-user-edit"></i>
+                                    <span>Manage Users</span>
+                                </a>
+                                <a href="analytics.html" class="admin-quick-action">
+                                    <i class="fas fa-download"></i>
+                                    <span>Export Data</span>
+                                </a>
+                                <a href="settings.html" class="admin-quick-action">
+                                    <i class="fas fa-cog"></i>
+                                    <span>System Settings</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- <script src="../js/admin-api.js"></script>
+    <script src="../js/admin-auth.js"></script>
+    <script src="../js/admin-dashboard.js"></script> -->
+    <script>
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initDashboard();
+        });
+    </script>
+</body>
+</html>

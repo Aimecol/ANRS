@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANRS Admin Login - Balanced Diet Recommendation System</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+</head>
+<body>
+    <div class="admin-login-container">
+        <div class="admin-login-card">
+            <div class="admin-login-logo">
+                <h1><i class="fas fa-shield-alt"></i> ANRS Admin</h1>
+                <p>Balanced Diet Recommendation System</p>
+                <p>Administrative Dashboard</p>
+            </div>
+
+            <form id="admin-login-form" class="admin-login-form">
+                <div id="admin-login-error" class="admin-error hidden"></div>
+                <div id="admin-login-success" class="admin-success hidden"></div>
+
+                <div class="admin-form-group">
+                    <label for="admin-email" class="admin-form-label">
+                        <i class="fas fa-envelope"></i> Email Address
+                    </label>
+                    <input 
+                        type="email" 
+                        id="admin-email" 
+                        name="email" 
+                        class="admin-form-input" 
+                        placeholder="Enter your admin email"
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+
+                <div class="admin-form-group">
+                    <label for="admin-password" class="admin-form-label">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <input 
+                        type="password" 
+                        id="admin-password" 
+                        name="password" 
+                        class="admin-form-input" 
+                        placeholder="Enter your password"
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+
+                <div class="admin-form-group">
+                    <button type="submit" class="admin-btn admin-btn-primary admin-btn-full">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Sign In to Dashboard
+                    </button>
+                </div>
+
+                <div class="admin-form-group" style="text-align: center; margin-top: 2rem;">
+                    <p style="color: var(--admin-gray-600); font-size: 0.9rem;">
+                        Don't have an admin account? 
+                        <a href="pages/register.html" style="color: var(--admin-primary); text-decoration: none; font-weight: 600;">
+                            Register here
+                        </a>
+                    </p>
+                </div>
+
+                <div class="admin-form-group" style="text-align: center; margin-top: 1rem;">
+                    <a href="../index.html" style="color: var(--admin-gray-500); text-decoration: none; font-size: 0.9rem;">
+                        <i class="fas fa-arrow-left"></i> Back to Main Site
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Signing you in...</p>
+        </div>
+    </div>
+
+    <!-- <script src="js/admin-api.js"></script>
+    <script src="js/admin-auth.js"></script> -->
+    <script>
+        // Initialize admin login
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     // Check if already logged in
+        //     const adminToken = localStorage.getItem('adminToken');
+        //     if (adminToken) {
+        //         // Verify token and redirect if valid
+        //         AdminAPI.verifyAdminToken().then(isValid => {
+        //             if (isValid) {
+        //                 window.location.href = 'pages/dashboard.html';
+        //             }
+        //         }).catch(() => {
+        //             // Token invalid, remove it
+        //             localStorage.removeItem('adminToken');
+        //         });
+        //     }
+
+        //     // Handle form submission
+        //     const loginForm = document.getElementById('admin-login-form');
+        //     if (loginForm) {
+        //         loginForm.addEventListener('submit', handleAdminLogin);
+        //     }
+
+        //     // Add enter key support
+        //     document.addEventListener('keypress', function(e) {
+        //         if (e.key === 'Enter' && document.activeElement.tagName !== 'BUTTON') {
+        //             e.preventDefault();
+        //             loginForm.dispatchEvent(new Event('submit'));
+        //         }
+        //     });
+        // });
+
+        // Initialize admin login
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle form submission
+            const loginForm = document.getElementById('admin-login-form');
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const loadingOverlay = document.getElementById('loading-overlay');
+                const emailInput = document.getElementById('admin-email');
+                const passwordInput = document.getElementById('admin-password');
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+                if (email && password) {
+                    const submitBtn = loginForm.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+                    submitBtn.innerHTML =
+                    '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+                    submitBtn.disabled = true;
+                    setTimeout(() => {
+                        loadingOverlay.classList.remove('hidden');
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    }, 1500);
+                } else {
+                    alert('Please enter both email and password.');
+                }
+                window.location.href = 'pages/dashboard.html';
+            });
+
+            // Add enter key support
+            document.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && document.activeElement.tagName !== 'BUTTON') {
+                    e.preventDefault();
+                    loginForm.dispatchEvent(new Event('submit'));
+                }
+            });
+        });
+    </script>
+
+    <style>
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            background-color: var(--admin-white);
+            padding: var(--admin-spacing-xl);
+            border-radius: var(--admin-radius-lg);
+            text-align: center;
+            box-shadow: var(--admin-shadow-xl);
+        }
+
+        .loading-spinner i {
+            font-size: 2rem;
+            color: var(--admin-primary);
+            margin-bottom: var(--admin-spacing-md);
+        }
+
+        .loading-spinner p {
+            color: var(--admin-gray-700);
+            margin: 0;
+        }
+
+        /* Demo credentials info */
+        .demo-info {
+            margin-top: var(--admin-spacing-xl);
+            padding: var(--admin-spacing-md);
+            background-color: var(--admin-gray-100);
+            border-radius: var(--admin-radius-md);
+            font-size: 0.85rem;
+            color: var(--admin-gray-600);
+        }
+
+        .demo-info h4 {
+            color: var(--admin-primary);
+            margin-bottom: var(--admin-spacing-sm);
+        }
+
+        .demo-info code {
+            background-color: var(--admin-white);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</body>
+</html>

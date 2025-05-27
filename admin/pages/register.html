@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Registration - ANRS Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/admin.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../../assets/icons/favicon.ico"
+    />
+  </head>
+  <body>
+    <div class="admin-login-container">
+      <div class="admin-login-card" style="max-width: 500px">
+        <div class="admin-login-logo">
+          <h1><i class="fas fa-user-plus"></i> Admin Registration</h1>
+          <p>Balanced Diet Recommendation System</p>
+          <p>Create Administrative Account</p>
+        </div>
+
+        <form id="admin-register-form" class="admin-login-form">
+          <div id="admin-register-error" class="admin-error hidden"></div>
+          <div id="admin-register-success" class="admin-success hidden"></div>
+
+          <div class="admin-form-group">
+            <label for="admin-name" class="admin-form-label">
+              <i class="fas fa-user"></i> Full Name
+            </label>
+            <input
+              type="text"
+              id="admin-name"
+              name="name"
+              class="admin-form-input"
+              placeholder="Enter your full name"
+              required
+              autocomplete="name"
+              minlength="2"
+            />
+          </div>
+
+          <div class="admin-form-group">
+            <label for="admin-email" class="admin-form-label">
+              <i class="fas fa-envelope"></i> Email Address
+            </label>
+            <input
+              type="email"
+              id="admin-email"
+              name="email"
+              class="admin-form-input"
+              placeholder="Enter your email address"
+              required
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="admin-form-group">
+            <label for="admin-password" class="admin-form-label">
+              <i class="fas fa-lock"></i> Password
+            </label>
+            <input
+              type="password"
+              id="admin-password"
+              name="password"
+              class="admin-form-input"
+              placeholder="Create a strong password"
+              required
+              autocomplete="new-password"
+              minlength="6"
+            />
+            <small
+              style="
+                color: var(--admin-gray-600);
+                font-size: 0.8rem;
+                margin-top: 0.25rem;
+                display: block;
+              "
+            >
+              Password should be at least 6 characters with a mix of letters,
+              numbers, and symbols
+            </small>
+          </div>
+
+          <div class="admin-form-group">
+            <label for="admin-confirm-password" class="admin-form-label">
+              <i class="fas fa-lock"></i> Confirm Password
+            </label>
+            <input
+              type="password"
+              id="admin-confirm-password"
+              name="confirmPassword"
+              class="admin-form-input"
+              placeholder="Confirm your password"
+              required
+              autocomplete="new-password"
+              minlength="6"
+            />
+          </div>
+
+          <div class="admin-form-group">
+            <label for="admin-key" class="admin-form-label">
+              <i class="fas fa-key"></i> Admin Registration Key
+            </label>
+            <input
+              type="password"
+              id="admin-key"
+              name="adminKey"
+              class="admin-form-input"
+              placeholder="Enter admin registration key"
+              required
+            />
+            <small
+              style="
+                color: var(--admin-gray-600);
+                font-size: 0.8rem;
+                margin-top: 0.25rem;
+                display: block;
+              "
+            >
+              This key is required to create admin accounts. Contact your system
+              administrator.
+            </small>
+          </div>
+
+          <div class="admin-form-group">
+            <button
+              type="submit"
+              class="admin-btn admin-btn-primary admin-btn-full"
+            >
+              <i class="fas fa-user-plus"></i>
+              Create Admin Account
+            </button>
+          </div>
+
+          <div
+            class="admin-form-group"
+            style="text-align: center; margin-top: 2rem"
+          >
+            <p style="color: var(--admin-gray-600); font-size: 0.9rem">
+              Already have an admin account?
+              <a
+                href="../index.html"
+                style="
+                  color: var(--admin-primary);
+                  text-decoration: none;
+                  font-weight: 600;
+                "
+              >
+                Sign in here
+              </a>
+            </p>
+          </div>
+
+          <div
+            class="admin-form-group"
+            style="text-align: center; margin-top: 1rem"
+          >
+            <a
+              href="../../index.html"
+              style="
+                color: var(--admin-gray-500);
+                text-decoration: none;
+                font-size: 0.9rem;
+              "
+            >
+              <i class="fas fa-arrow-left"></i> Back to Main Site
+            </a>
+          </div>
+        </form>
+
+        <!-- Demo info for development -->
+        <div class="demo-info">
+          <h4><i class="fas fa-info-circle"></i> Development Mode</h4>
+          <p>
+            For testing purposes, use admin key: <code>ANRS_ADMIN_2024</code>
+          </p>
+          <p><strong>Note:</strong> This should be changed in production!</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/admin-api.js"></script>
+    <script src="../js/admin-auth.js"></script>
+    <script>
+      // Initialize admin registration
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check if already logged in
+        const adminToken = localStorage.getItem("adminToken");
+        if (adminToken) {
+          // Verify token and redirect if valid
+          AdminAPI.verifyAdminToken()
+            .then((isValid) => {
+              if (isValid) {
+                window.location.href = "dashboard.html";
+              }
+            })
+            .catch(() => {
+              // Token invalid, remove it
+              localStorage.removeItem("adminToken");
+            });
+        }
+
+        // Handle form submission
+        const registerForm = document.getElementById("admin-register-form");
+        if (registerForm) {
+          registerForm.addEventListener("submit", handleAdminRegistration);
+        }
+
+        // Password confirmation validation
+        const passwordInput = document.getElementById("admin-password");
+        const confirmPasswordInput = document.getElementById(
+          "admin-confirm-password"
+        );
+
+        function validatePasswordMatch() {
+          if (
+            confirmPasswordInput.value &&
+            passwordInput.value !== confirmPasswordInput.value
+          ) {
+            confirmPasswordInput.setCustomValidity("Passwords do not match");
+          } else {
+            confirmPasswordInput.setCustomValidity("");
+          }
+        }
+
+        if (passwordInput && confirmPasswordInput) {
+          passwordInput.addEventListener("input", validatePasswordMatch);
+          confirmPasswordInput.addEventListener("input", validatePasswordMatch);
+        }
+
+        // Real-time password strength indicator
+        if (passwordInput) {
+          passwordInput.addEventListener("input", function () {
+            const password = this.value;
+            const strengthIndicator =
+              document.getElementById("password-strength");
+
+            if (password.length === 0) {
+              if (strengthIndicator) strengthIndicator.style.display = "none";
+              return;
+            }
+
+            // Simple strength check
+            let strength = 0;
+            if (password.length >= 6) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength++;
+
+            const strengthText = [
+              "Very Weak",
+              "Weak",
+              "Fair",
+              "Good",
+              "Strong",
+            ][Math.min(strength, 4)];
+            const strengthColor = [
+              "#f44336",
+              "#ff9800",
+              "#ffc107",
+              "#4caf50",
+              "#2e7d32",
+            ][Math.min(strength, 4)];
+
+            if (!strengthIndicator) {
+              const indicator = document.createElement("div");
+              indicator.id = "password-strength";
+              indicator.style.cssText = `
+                            font-size: 0.8rem;
+                            margin-top: 0.25rem;
+                            padding: 0.25rem;
+                            border-radius: 3px;
+                            text-align: center;
+                            font-weight: 600;
+                        `;
+              passwordInput.parentNode.appendChild(indicator);
+            }
+
+            const indicator = document.getElementById("password-strength");
+            indicator.textContent = `Password Strength: ${strengthText}`;
+            indicator.style.backgroundColor = strengthColor + "20";
+            indicator.style.color = strengthColor;
+            indicator.style.display = "block";
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

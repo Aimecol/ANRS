@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - ANRS Admin</title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/icons/favicon.ico">
+</head>
+<body>
+    <div class="admin-dashboard">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="admin-sidebar-header">
+                <div class="admin-sidebar-logo">ANRS Admin</div>
+                <div class="admin-sidebar-subtitle">Dashboard</div>
+            </div>
+            
+            <nav class="admin-sidebar-nav">
+                <div class="admin-nav-item">
+                    <a href="dashboard.html" class="admin-nav-link">
+                        <i class="fas fa-tachometer-alt admin-nav-icon"></i>
+                        <span class="admin-nav-text">Dashboard</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="users.html" class="admin-nav-link">
+                        <i class="fas fa-users admin-nav-icon"></i>
+                        <span class="admin-nav-text">Users</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="foods.html" class="admin-nav-link">
+                        <i class="fas fa-apple-alt admin-nav-icon"></i>
+                        <span class="admin-nav-text">Foods</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="meals.html" class="admin-nav-link">
+                        <i class="fas fa-utensils admin-nav-icon"></i>
+                        <span class="admin-nav-text">Meals</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="analytics.html" class="admin-nav-link active">
+                        <i class="fas fa-chart-bar admin-nav-icon"></i>
+                        <span class="admin-nav-text">Analytics</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="settings.html" class="admin-nav-link">
+                        <i class="fas fa-cog admin-nav-icon"></i>
+                        <span class="admin-nav-text">Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main-content" id="adminMainContent">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="admin-header-left">
+                    <button class="admin-sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="admin-page-title">Analytics & Reports</h1>
+                </div>
+                <div class="admin-header-right">
+                    <div class="admin-user-menu">
+                        <div class="admin-user-avatar" id="userAvatar" title="Admin Menu">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="admin-user-dropdown" id="userDropdown">
+                            <a href="#" class="admin-logout-btn">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Analytics Content -->
+            <div class="admin-content">
+                <!-- Time Period Selector -->
+                <div class="admin-page-controls">
+                    <div class="admin-period-selector">
+                        <label for="timePeriod" class="admin-form-label">Time Period:</label>
+                        <select id="timePeriod" class="admin-form-input" style="width: auto;">
+                            <option value="7d">Last 7 Days</option>
+                            <option value="30d" selected>Last 30 Days</option>
+                            <option value="90d">Last 90 Days</option>
+                            <option value="1y">Last Year</option>
+                        </select>
+                    </div>
+                    <div class="admin-page-actions">
+                        <button class="admin-btn admin-btn-secondary" onclick="exportAnalytics()">
+                            <i class="fas fa-download"></i> Export Report
+                        </button>
+                        <button class="admin-btn admin-btn-primary" onclick="refreshAnalytics()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Key Metrics -->
+                <div class="admin-stats-grid">
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="admin-stat-content">
+                            <div class="admin-stat-number" id="analyticsUsers">-</div>
+                            <div class="admin-stat-label">Total Users</div>
+                            <div class="admin-stat-change positive" id="analyticsUsersChange">+0%</div>
+                        </div>
+                    </div>
+
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="admin-stat-content">
+                            <div class="admin-stat-number" id="analyticsMeals">-</div>
+                            <div class="admin-stat-label">Meals Created</div>
+                            <div class="admin-stat-change positive" id="analyticsMealsChange">+0%</div>
+                        </div>
+                    </div>
+
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="admin-stat-content">
+                            <div class="admin-stat-number" id="analyticsEngagement">-</div>
+                            <div class="admin-stat-label">Avg. Sessions</div>
+                            <div class="admin-stat-change neutral" id="analyticsEngagementChange">0%</div>
+                        </div>
+                    </div>
+
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="admin-stat-content">
+                            <div class="admin-stat-number" id="analyticsAvgBudget">-</div>
+                            <div class="admin-stat-label">Avg. Budget</div>
+                            <div class="admin-stat-change positive" id="analyticsAvgBudgetChange">+0%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Grid -->
+                <div class="admin-analytics-grid">
+                    <!-- User Growth Chart -->
+                    <div class="admin-chart-card">
+                        <div class="admin-chart-header">
+                            <h3 class="admin-chart-title">
+                                <i class="fas fa-user-plus"></i> User Growth
+                            </h3>
+                            <select class="admin-form-input" style="width: auto; font-size: 0.9rem;">
+                                <option>Daily</option>
+                                <option>Weekly</option>
+                                <option>Monthly</option>
+                            </select>
+                        </div>
+                        <div class="admin-chart-content">
+                            <div class="admin-chart-placeholder">
+                                <i class="fas fa-chart-line"></i>
+                                <p>User growth chart will be displayed here</p>
+                                <small>Chart integration pending</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Meal Categories Chart -->
+                    <div class="admin-chart-card">
+                        <div class="admin-chart-header">
+                            <h3 class="admin-chart-title">
+                                <i class="fas fa-chart-pie"></i> Popular Food Categories
+                            </h3>
+                        </div>
+                        <div class="admin-chart-content">
+                            <div class="admin-chart-placeholder">
+                                <i class="fas fa-chart-pie"></i>
+                                <p>Food category distribution chart</p>
+                                <small>Chart integration pending</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Heatmap -->
+                    <div class="admin-chart-card">
+                        <div class="admin-chart-header">
+                            <h3 class="admin-chart-title">
+                                <i class="fas fa-calendar-alt"></i> Activity Heatmap
+                            </h3>
+                        </div>
+                        <div class="admin-chart-content">
+                            <div class="admin-chart-placeholder">
+                                <i class="fas fa-calendar-alt"></i>
+                                <p>User activity heatmap</p>
+                                <small>Chart integration pending</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Budget Analysis -->
+                    <div class="admin-chart-card">
+                        <div class="admin-chart-header">
+                            <h3 class="admin-chart-title">
+                                <i class="fas fa-money-bill-wave"></i> Budget Analysis
+                            </h3>
+                        </div>
+                        <div class="admin-chart-content">
+                            <div class="admin-chart-placeholder">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <p>Budget distribution and trends</p>
+                                <small>Chart integration pending</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Tables -->
+                <div class="admin-dashboard-grid">
+                    <!-- Top Foods -->
+                    <div class="admin-dashboard-card">
+                        <div class="admin-card-header">
+                            <h3><i class="fas fa-star"></i> Most Popular Foods</h3>
+                            <button class="admin-btn admin-btn-sm" onclick="exportTopFoods()">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                        </div>
+                        <div class="admin-card-content">
+                            <div id="topFoodsList" class="admin-top-items-list">
+                                <div class="admin-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Engagement -->
+                    <div class="admin-dashboard-card">
+                        <div class="admin-card-header">
+                            <h3><i class="fas fa-fire"></i> Most Active Users</h3>
+                            <button class="admin-btn admin-btn-sm" onclick="exportActiveUsers()">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                        </div>
+                        <div class="admin-card-content">
+                            <div id="activeUsersList" class="admin-top-items-list">
+                                <div class="admin-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Performance -->
+                    <div class="admin-dashboard-card">
+                        <div class="admin-card-header">
+                            <h3><i class="fas fa-tachometer-alt"></i> System Performance</h3>
+                            <button class="admin-btn admin-btn-sm" onclick="refreshPerformance()">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                        </div>
+                        <div class="admin-card-content">
+                            <div id="performanceMetrics" class="admin-performance-list">
+                                <div class="admin-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Export Options -->
+                    <div class="admin-dashboard-card">
+                        <div class="admin-card-header">
+                            <h3><i class="fas fa-download"></i> Data Export</h3>
+                        </div>
+                        <div class="admin-card-content">
+                            <div class="admin-export-options">
+                                <button class="admin-export-btn" onclick="exportUsers()">
+                                    <i class="fas fa-users"></i>
+                                    <span>Export Users</span>
+                                    <small>CSV format</small>
+                                </button>
+                                <button class="admin-export-btn" onclick="exportMeals()">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Export Meals</span>
+                                    <small>CSV format</small>
+                                </button>
+                                <button class="admin-export-btn" onclick="exportAnalytics()">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <span>Export Analytics</span>
+                                    <small>PDF report</small>
+                                </button>
+                                <button class="admin-export-btn" onclick="exportAll()">
+                                    <i class="fas fa-database"></i>
+                                    <span>Full Export</span>
+                                    <small>ZIP archive</small>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- <script src="../js/admin-api.js"></script>
+    <script src="../js/admin-auth.js"></script>
+    <script src="../js/admin-dashboard.js"></script> -->
+    <script>
+        // Initialize analytics page
+        document.addEventListener('DOMContentLoaded', function() {
+            initAnalyticsPage();
+        });
+    </script>
+</body>
+</html>

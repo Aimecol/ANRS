@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Admin Registration</title>
+</head>
+<body>
+    <h1>Test Admin Registration</h1>
+    <div id="result"></div>
+    
+    <script>
+        async function testRegistration() {
+            const result = document.getElementById('result');
+            result.innerHTML = 'Testing registration...';
+            
+            try {
+                const response = await fetch('http://localhost:3001/api/admin/auth/admin-register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: 'Test Admin',
+                        email: 'test@admin.com',
+                        password: 'testpass123',
+                        adminKey: 'ANRS_ADMIN_2024'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = `
+                        <h2 style="color: green;">✅ Registration Successful!</h2>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    result.innerHTML = `
+                        <h2 style="color: red;">❌ Registration Failed</h2>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                result.innerHTML = `
+                    <h2 style="color: red;">❌ Network Error</h2>
+                    <p>${error.message}</p>
+                `;
+            }
+        }
+        
+        // Test automatically when page loads
+        document.addEventListener('DOMContentLoaded', testRegistration);
+    </script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - ANRS Admin</title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/icons/favicon.ico">
+</head>
+<body>
+    <div class="admin-dashboard">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="admin-sidebar-header">
+                <div class="admin-sidebar-logo">ANRS Admin</div>
+                <div class="admin-sidebar-subtitle">Dashboard</div>
+            </div>
+            
+            <nav class="admin-sidebar-nav">
+                <div class="admin-nav-item">
+                    <a href="dashboard.html" class="admin-nav-link">
+                        <i class="fas fa-tachometer-alt admin-nav-icon"></i>
+                        <span class="admin-nav-text">Dashboard</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="users.html" class="admin-nav-link">
+                        <i class="fas fa-users admin-nav-icon"></i>
+                        <span class="admin-nav-text">Users</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="foods.html" class="admin-nav-link">
+                        <i class="fas fa-apple-alt admin-nav-icon"></i>
+                        <span class="admin-nav-text">Foods</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="meals.html" class="admin-nav-link">
+                        <i class="fas fa-utensils admin-nav-icon"></i>
+                        <span class="admin-nav-text">Meals</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="analytics.html" class="admin-nav-link">
+                        <i class="fas fa-chart-bar admin-nav-icon"></i>
+                        <span class="admin-nav-text">Analytics</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="settings.html" class="admin-nav-link active">
+                        <i class="fas fa-cog admin-nav-icon"></i>
+                        <span class="admin-nav-text">Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main-content" id="adminMainContent">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="admin-header-left">
+                    <button class="admin-sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="admin-page-title">System Settings</h1>
+                </div>
+                <div class="admin-header-right">
+                    <div class="admin-user-menu">
+                        <div class="admin-user-avatar" id="userAvatar" title="Admin Menu">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="admin-user-dropdown" id="userDropdown">
+                            <a href="#" class="admin-logout-btn">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Settings Content -->
+            <div class="admin-content">
+                <!-- Settings Grid -->
+                <div class="admin-settings-grid">
+                    <!-- General Settings -->
+                    <div class="admin-settings-section">
+                        <div class="admin-settings-header">
+                            <h3 class="admin-settings-title">
+                                <i class="fas fa-cog"></i> General Settings
+                            </h3>
+                        </div>
+                        <div class="admin-settings-content">
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">System Name</div>
+                                    <div class="admin-setting-description">The name displayed throughout the application</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <input type="text" class="admin-form-input" value="ANRS - Balanced Diet Recommendation System" style="width: 300px;">
+                                </div>
+                            </div>
+
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">Default Language</div>
+                                    <div class="admin-setting-description">Primary language for the system interface</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <select class="admin-form-input" style="width: 200px;">
+                                        <option value="en" selected>English</option>
+                                        <option value="rw">Kinyarwanda</option>
+                                        <option value="fr">French</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">Maintenance Mode</div>
+                                    <div class="admin-setting-description">Enable to prevent user access during updates</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <label class="admin-checkbox-label">
+                                        <input type="checkbox" class="admin-checkbox" id="maintenanceMode">
+                                        <span class="admin-checkbox-text">Enable Maintenance Mode</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">User Registration</div>
+                                    <div class="admin-setting-description">Allow new users to register accounts</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <label class="admin-checkbox-label">
+                                        <input type="checkbox" class="admin-checkbox" id="userRegistration" checked>
+                                        <span class="admin-checkbox-text">Allow User Registration</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Settings -->
+                    <div class="admin-settings-section">
+                        <div class="admin-settings-header">
+                            <h3 class="admin-settings-title">
+                                <i class="fas fa-shield-alt"></i> Security Settings
+                            </h3>
+                        </div>
+                        <div class="admin-settings-content">
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">Session Timeout</div>
+                                    <div class="admin-setting-description">Automatic logout after inactivity (minutes)</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <input type="number" class="admin-form-input" value="30" min="5" max="480" style="width: 100px;">
+                                </div>
+                            </div>
+
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">Password Requirements</div>
+                                    <div class="admin-setting-description">Minimum password length for user accounts</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <input type="number" class="admin-form-input" value="6" min="4" max="20" style="width: 100px;">
+                                </div>
+                            </div>
+
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">Two-Factor Authentication</div>
+                                    <div class="admin-setting-description">Require 2FA for admin accounts</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <label class="admin-checkbox-label">
+                                        <input type="checkbox" class="admin-checkbox" id="twoFactorAuth">
+                                        <span class="admin-checkbox-text">Require 2FA for Admins</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">Login Attempts</div>
+                                    <div class="admin-setting-description">Maximum failed login attempts before lockout</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <input type="number" class="admin-form-input" value="5" min="3" max="10" style="width: 100px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Email Settings -->
+                    <div class="admin-settings-section">
+                        <div class="admin-settings-header">
+                            <h3 class="admin-settings-title">
+                                <i class="fas fa-envelope"></i> Email Settings
+                            </h3>
+                        </div>
+                        <div class="admin-settings-content">
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">SMTP Server</div>
+                                    <div class="admin-setting-description">Email server hostname</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <input type="text" class="admin-form-input" placeholder="smtp.gmail.com" style="width: 250px;">
+                                </div>
+                            </div>
+
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">SMTP Port</div>
+                                    <div class="admin-setting-description">Email server port number</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <input type="number" class="admin-form-input" value="587" style="width: 100px;">
+                                </div>
+                            </div>
+
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">From Email</div>
+                                    <div class="admin-setting-description">Default sender email address</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <input type="email" class="admin-form-input" placeholder="noreply@anrs.rw" style="width: 250px;">
+                                </div>
+                            </div>
+
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">Email Notifications</div>
+                                    <div class="admin-setting-description">Send email notifications to users</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <label class="admin-checkbox-label">
+                                        <input type="checkbox" class="admin-checkbox" id="emailNotifications" checked>
+                                        <span class="admin-checkbox-text">Enable Email Notifications</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data & Backup Settings -->
+                    <div class="admin-settings-section">
+                        <div class="admin-settings-header">
+                            <h3 class="admin-settings-title">
+                                <i class="fas fa-database"></i> Data & Backup
+                            </h3>
+                        </div>
+                        <div class="admin-settings-content">
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">Automatic Backups</div>
+                                    <div class="admin-setting-description">Schedule regular database backups</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <select class="admin-form-input" style="width: 150px;">
+                                        <option value="disabled">Disabled</option>
+                                        <option value="daily" selected>Daily</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">Data Retention</div>
+                                    <div class="admin-setting-description">How long to keep user activity logs (days)</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <input type="number" class="admin-form-input" value="90" min="30" max="365" style="width: 100px;">
+                                </div>
+                            </div>
+
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">Export Format</div>
+                                    <div class="admin-setting-description">Default format for data exports</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <select class="admin-form-input" style="width: 120px;">
+                                        <option value="csv" selected>CSV</option>
+                                        <option value="json">JSON</option>
+                                        <option value="xlsx">Excel</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">Manual Backup</div>
+                                    <div class="admin-setting-description">Create an immediate backup of all data</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <button class="admin-btn admin-btn-secondary" onclick="createBackup()">
+                                        <i class="fas fa-download"></i> Create Backup
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Information -->
+                    <div class="admin-settings-section">
+                        <div class="admin-settings-header">
+                            <h3 class="admin-settings-title">
+                                <i class="fas fa-info-circle"></i> System Information
+                            </h3>
+                        </div>
+                        <div class="admin-settings-content">
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">Version</div>
+                                    <div class="admin-setting-description">Current system version</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <span class="admin-badge admin-badge-user">v1.0.0</span>
+                                </div>
+                            </div>
+
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">Database</div>
+                                    <div class="admin-setting-description">Database connection status</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <span class="admin-badge admin-badge-active">Connected</span>
+                                </div>
+                            </div>
+
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">Last Backup</div>
+                                    <div class="admin-setting-description">Most recent backup timestamp</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <span style="color: var(--admin-gray-600);">Never</span>
+                                </div>
+                            </div>
+
+                            <div class="admin-setting-item">
+                                <div class="admin-setting-info">
+                                    <div class="admin-setting-label">Uptime</div>
+                                    <div class="admin-setting-description">System uptime since last restart</div>
+                                </div>
+                                <div class="admin-setting-control">
+                                    <span style="color: var(--admin-primary); font-weight: 600;">2 days, 14 hours</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save Settings Button -->
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="admin-btn admin-btn-primary admin-btn-large" onclick="saveSettings()">
+                        <i class="fas fa-save"></i> Save All Settings
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- <script src="../js/admin-api.js"></script>
+    <script src="../js/admin-auth.js"></script>
+    <script src="../js/admin-dashboard.js"></script> -->
+    <script>
+        // Initialize settings page
+        document.addEventListener('DOMContentLoaded', function() {
+            initSettingsPage();
+        });
+
+        function saveSettings() {
+            showNotification('Settings saved successfully!', 'success');
+        }
+
+        function createBackup() {
+            showNotification('Backup created successfully!', 'success');
+        }
+
+        function initSettingsPage() {
+            initSidebar();
+            initUserMenu();
+        }
+    </script>
+</body>
+</html>

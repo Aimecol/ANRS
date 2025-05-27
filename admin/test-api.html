@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin API Test</title>
+</head>
+<body>
+    <h1>Admin API Test</h1>
+    <div id="results"></div>
+    
+    <script src="js/admin-api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const results = document.getElementById('results');
+            
+            function log(message) {
+                console.log(message);
+                results.innerHTML += '<p>' + message + '</p>';
+            }
+            
+            // Test AdminAPI availability
+            log('Testing AdminAPI...');
+            log('AdminAPI type: ' + typeof AdminAPI);
+            log('AdminAPI: ' + AdminAPI);
+            
+            if (AdminAPI) {
+                log('AdminAPI.register type: ' + typeof AdminAPI.register);
+                log('AdminAPI methods: ' + Object.getOwnPropertyNames(Object.getPrototypeOf(AdminAPI)));
+                
+                // Test if we can call the register method
+                try {
+                    log('Testing register method call...');
+                    AdminAPI.register({
+                        name: 'Test',
+                        email: 'test@test.com',
+                        password: 'test123',
+                        adminKey: 'test'
+                    }).then(response => {
+                        log('Register response: ' + JSON.stringify(response));
+                    }).catch(error => {
+                        log('Register error: ' + error.message);
+                    });
+                } catch (error) {
+                    log('Register method error: ' + error.message);
+                }
+            } else {
+                log('AdminAPI is not available!');
+            }
+        });
+    </script>
+</body>
+</html>
