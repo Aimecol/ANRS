@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Profile - ANRS Admin</title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/icons/favicon.ico">
+</head>
+<body>
+    <div class="admin-dashboard">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="admin-sidebar-header">
+                <div class="admin-sidebar-logo">ANRS Admin</div>
+                <div class="admin-sidebar-subtitle">Dashboard</div>
+            </div>
+            
+            <nav class="admin-sidebar-nav">
+                <div class="admin-nav-item">
+                    <a href="dashboard.html" class="admin-nav-link">
+                        <i class="fas fa-tachometer-alt admin-nav-icon"></i>
+                        <span class="admin-nav-text">Dashboard</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="users.html" class="admin-nav-link">
+                        <i class="fas fa-users admin-nav-icon"></i>
+                        <span class="admin-nav-text">Users</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="foods.html" class="admin-nav-link">
+                        <i class="fas fa-utensils admin-nav-icon"></i>
+                        <span class="admin-nav-text">Foods</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="meals.html" class="admin-nav-link">
+                        <i class="fas fa-plate-wheat admin-nav-icon"></i>
+                        <span class="admin-nav-text">Meals</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="analytics.html" class="admin-nav-link">
+                        <i class="fas fa-chart-bar admin-nav-icon"></i>
+                        <span class="admin-nav-text">Analytics</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="profile.html" class="admin-nav-link active">
+                        <i class="fas fa-user-circle admin-nav-icon"></i>
+                        <span class="admin-nav-text">Profile</span>
+                    </a>
+                </div>
+                <div class="admin-nav-item">
+                    <a href="settings.html" class="admin-nav-link">
+                        <i class="fas fa-cog admin-nav-icon"></i>
+                        <span class="admin-nav-text">Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main-content">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="admin-header-left">
+                    <button class="admin-sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="admin-page-title">Admin Profile</h1>
+                </div>
+                <div class="admin-header-right">
+                    <div class="admin-user-menu">
+                        <div class="admin-user-avatar" id="userAvatar">A</div>
+                        <div class="admin-user-dropdown">
+                            <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                            <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                            <a href="../index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="admin-content">
+                <!-- Profile Header -->
+                <div class="admin-profile-header">
+                    <div class="admin-profile-avatar-section">
+                        <div class="admin-profile-avatar-large" id="profileAvatarLarge">A</div>
+                        <button class="admin-btn admin-btn-secondary admin-btn-sm" id="changeAvatarBtn">
+                            <i class="fas fa-camera"></i> Change Photo
+                        </button>
+                    </div>
+                    <div class="admin-profile-info">
+                        <h2 class="admin-profile-name" id="profileName">Administrator</h2>
+                        <p class="admin-profile-role">Super Admin</p>
+                        <p class="admin-profile-email" id="profileEmail">admin@anrs.com</p>
+                        <div class="admin-profile-stats">
+                            <div class="admin-profile-stat">
+                                <span class="admin-profile-stat-value">156</span>
+                                <span class="admin-profile-stat-label">Users Managed</span>
+                            </div>
+                            <div class="admin-profile-stat">
+                                <span class="admin-profile-stat-value">89</span>
+                                <span class="admin-profile-stat-label">Foods Added</span>
+                            </div>
+                            <div class="admin-profile-stat">
+                                <span class="admin-profile-stat-value">234</span>
+                                <span class="admin-profile-stat-label">Meals Created</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Content Grid -->
+                <div class="admin-profile-grid">
+                    <!-- Personal Information -->
+                    <div class="admin-profile-section">
+                        <div class="admin-profile-section-header">
+                            <h3><i class="fas fa-user"></i> Personal Information</h3>
+                            <button class="admin-btn admin-btn-secondary admin-btn-sm" id="editPersonalBtn">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </div>
+                        <div class="admin-profile-section-content">
+                            <div class="admin-profile-field">
+                                <label class="admin-profile-field-label">Full Name</label>
+                                <div class="admin-profile-field-value" id="fullName">Administrator User</div>
+                            </div>
+                            <div class="admin-profile-field">
+                                <label class="admin-profile-field-label">Email Address</label>
+                                <div class="admin-profile-field-value" id="emailAddress">admin@anrs.com</div>
+                            </div>
+                            <div class="admin-profile-field">
+                                <label class="admin-profile-field-label">Phone Number</label>
+                                <div class="admin-profile-field-value" id="phoneNumber">+250 788 123 456</div>
+                            </div>
+                            <div class="admin-profile-field">
+                                <label class="admin-profile-field-label">Department</label>
+                                <div class="admin-profile-field-value" id="department">System Administration</div>
+                            </div>
+                            <div class="admin-profile-field">
+                                <label class="admin-profile-field-label">Join Date</label>
+                                <div class="admin-profile-field-value" id="joinDate">January 15, 2024</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Settings -->
+                    <div class="admin-profile-section">
+                        <div class="admin-profile-section-header">
+                            <h3><i class="fas fa-shield-alt"></i> Security Settings</h3>
+                        </div>
+                        <div class="admin-profile-section-content">
+                            <div class="admin-profile-security-item">
+                                <div class="admin-profile-security-info">
+                                    <div class="admin-profile-security-title">Password</div>
+                                    <div class="admin-profile-security-desc">Last changed 30 days ago</div>
+                                </div>
+                                <button class="admin-btn admin-btn-secondary admin-btn-sm" id="changePasswordBtn">
+                                    Change Password
+                                </button>
+                            </div>
+                            <div class="admin-profile-security-item">
+                                <div class="admin-profile-security-info">
+                                    <div class="admin-profile-security-title">Two-Factor Authentication</div>
+                                    <div class="admin-profile-security-desc">Add an extra layer of security</div>
+                                </div>
+                                <button class="admin-btn admin-btn-primary admin-btn-sm" id="enable2FABtn">
+                                    Enable 2FA
+                                </button>
+                            </div>
+                            <div class="admin-profile-security-item">
+                                <div class="admin-profile-security-info">
+                                    <div class="admin-profile-security-title">Login Sessions</div>
+                                    <div class="admin-profile-security-desc">Manage your active sessions</div>
+                                </div>
+                                <button class="admin-btn admin-btn-secondary admin-btn-sm" id="manageSessionsBtn">
+                                    View Sessions
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Log -->
+                    <div class="admin-profile-section admin-profile-section-full">
+                        <div class="admin-profile-section-header">
+                            <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                            <button class="admin-btn admin-btn-secondary admin-btn-sm" id="viewAllActivityBtn">
+                                View All
+                            </button>
+                        </div>
+                        <div class="admin-profile-section-content">
+                            <div class="admin-activity-list">
+                                <div class="admin-activity-item">
+                                    <div class="admin-activity-icon">
+                                        <i class="fas fa-user-plus"></i>
+                                    </div>
+                                    <div class="admin-activity-content">
+                                        <div class="admin-activity-title">Added new user: John Doe</div>
+                                        <div class="admin-activity-time">2 hours ago</div>
+                                    </div>
+                                </div>
+                                <div class="admin-activity-item">
+                                    <div class="admin-activity-icon">
+                                        <i class="fas fa-utensils"></i>
+                                    </div>
+                                    <div class="admin-activity-content">
+                                        <div class="admin-activity-title">Updated food item: Banana</div>
+                                        <div class="admin-activity-time">5 hours ago</div>
+                                    </div>
+                                </div>
+                                <div class="admin-activity-item">
+                                    <div class="admin-activity-icon">
+                                        <i class="fas fa-cog"></i>
+                                    </div>
+                                    <div class="admin-activity-content">
+                                        <div class="admin-activity-title">Modified system settings</div>
+                                        <div class="admin-activity-time">1 day ago</div>
+                                    </div>
+                                </div>
+                                <div class="admin-activity-item">
+                                    <div class="admin-activity-icon">
+                                        <i class="fas fa-plate-wheat"></i>
+                                    </div>
+                                    <div class="admin-activity-content">
+                                        <div class="admin-activity-title">Created new meal plan</div>
+                                        <div class="admin-activity-time">2 days ago</div>
+                                    </div>
+                                </div>
+                                <div class="admin-activity-item">
+                                    <div class="admin-activity-icon">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </div>
+                                    <div class="admin-activity-content">
+                                        <div class="admin-activity-title">Generated analytics report</div>
+                                        <div class="admin-activity-time">3 days ago</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit Personal Info Modal -->
+    <div class="admin-modal" id="editPersonalModal">
+        <div class="admin-modal-content">
+            <div class="admin-modal-header">
+                <h3><i class="fas fa-edit"></i> Edit Personal Information</h3>
+                <button class="admin-modal-close" id="closeEditPersonalModal">&times;</button>
+            </div>
+            <div class="admin-modal-body">
+                <form id="editPersonalForm">
+                    <div class="admin-form-group">
+                        <label class="admin-form-label">Full Name</label>
+                        <input type="text" class="admin-form-input" id="editFullName" value="Administrator User">
+                    </div>
+                    <div class="admin-form-group">
+                        <label class="admin-form-label">Email Address</label>
+                        <input type="email" class="admin-form-input" id="editEmail" value="admin@anrs.com">
+                    </div>
+                    <div class="admin-form-group">
+                        <label class="admin-form-label">Phone Number</label>
+                        <input type="tel" class="admin-form-input" id="editPhone" value="+250 788 123 456">
+                    </div>
+                    <div class="admin-form-group">
+                        <label class="admin-form-label">Department</label>
+                        <input type="text" class="admin-form-input" id="editDepartment" value="System Administration">
+                    </div>
+                </form>
+            </div>
+            <div class="admin-modal-footer">
+                <button class="admin-btn admin-btn-secondary" id="cancelEditPersonal">Cancel</button>
+                <button class="admin-btn admin-btn-primary" id="savePersonalInfo">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div class="admin-modal" id="changePasswordModal">
+        <div class="admin-modal-content">
+            <div class="admin-modal-header">
+                <h3><i class="fas fa-key"></i> Change Password</h3>
+                <button class="admin-modal-close" id="closeChangePasswordModal">&times;</button>
+            </div>
+            <div class="admin-modal-body">
+                <form id="changePasswordForm">
+                    <div class="admin-form-group">
+                        <label class="admin-form-label">Current Password</label>
+                        <input type="password" class="admin-form-input" id="currentPassword" required>
+                    </div>
+                    <div class="admin-form-group">
+                        <label class="admin-form-label">New Password</label>
+                        <input type="password" class="admin-form-input" id="newPassword" required>
+                    </div>
+                    <div class="admin-form-group">
+                        <label class="admin-form-label">Confirm New Password</label>
+                        <input type="password" class="admin-form-input" id="confirmPassword" required>
+                    </div>
+                </form>
+            </div>
+            <div class="admin-modal-footer">
+                <button class="admin-btn admin-btn-secondary" id="cancelChangePassword">Cancel</button>
+                <button class="admin-btn admin-btn-primary" id="saveNewPassword">Change Password</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/admin-dashboard.js"></script>
+    <script src="../js/admin-profile.js"></script>
+</body>
+</html>
